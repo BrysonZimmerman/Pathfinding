@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="741ceb24-e493-47c1-9f25-1dbd8b151381" name="Changes" comment="Initial work on data structures. Saving for move to another computer.">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Mazefinder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Directions.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/TileProperties.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/WorldData.kt" afterDir="false" />
+    <list default="true" id="741ceb24-e493-47c1-9f25-1dbd8b151381" name="Changes" comment="Filled out World class necessities, created appropriate data holders. Should be ready for Mazefinder">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/data/Tile.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Pathfinder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Pathfinder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Tile.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Walls.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/World.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/World.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/WorldData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/WorldData.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +25,8 @@
       <list>
         <option value="JUnit5 Test Class" />
         <option value="Kotlin Enum" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Data Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -171,7 +166,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728930163649</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Filled out World class necessities, created appropriate data holders. Should be ready for Mazefinder">
+      <option name="closed" value="true" />
+      <created>1729358883715</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1729358883715</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -215,6 +218,7 @@
     <MESSAGE value="Project Setup 2" />
     <MESSAGE value="Added intellij files... for better or for worse" />
     <MESSAGE value="Initial work on data structures. Saving for move to another computer." />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial work on data structures. Saving for move to another computer." />
+    <MESSAGE value="Filled out World class necessities, created appropriate data holders. Should be ready for Mazefinder" />
+    <option name="LAST_COMMIT_MESSAGE" value="Filled out World class necessities, created appropriate data holders. Should be ready for Mazefinder" />
   </component>
 </project>

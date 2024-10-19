@@ -5,7 +5,7 @@ package technology.zim.data
 
 @JvmInline
 value class WorldData constructor(val data: ArrayList<ArrayList<TileProperties>>) {
-    constructor(xmin : Int, ymin : Int) : this(ArrayList<ArrayList<TileProperties>>()) {
+    fun setSize(xmin : Int, ymin : Int) {
         with(data) {
             this.ensureCapacity(xmin)
             this.fill(ArrayList<TileProperties>())
