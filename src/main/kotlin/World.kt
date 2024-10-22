@@ -1,10 +1,12 @@
 package technology.zim
 
-import technology.zim.data.Directions
 import technology.zim.data.Tile
 import technology.zim.data.TileProperties
 import technology.zim.data.WorldData
 import java.util.*
+
+//Singleton object containing a set of tiles
+//Has helper functions included
 
 //For now, keep it small with uncompresed tile representation
 //In the future, this could be stored in a gzipped file and memory mapped
@@ -15,37 +17,22 @@ import java.util.*
 //  Which currently only contains the edges of the "graph", stored as directions
 
 object World {
-    val tiles = WorldData(ArrayList<ArrayList<TileProperties>>())
+    //Default size should be 20
+    val tiles = WorldData(ArrayList<ArrayList<TileProperties>>(20))
 
     //Returns a coordinate pair
     fun getRandomLocation(): Tile {
         return Tile(Pair((0..tiles.data.size).random(), (0..tiles.data[0].size).random()))
     }
 
-    //Get the properties of the tile at the given coordinates
-    fun getProperties(tile: Tile): TileProperties {
-        return tiles.data.elementAt(tile.loc.first).elementAt(tile.loc.second)
+    fun setSize(x: Int, y: Int) {
+        tiles.setSize(x, y)
     }
 
-
-    //fun addConnection(at: Pair<Int, Int>, dir: Directions)
-
-    //Sort out what cells are connected. Induces some CPU overhead compared to storing a simple list
-    //Benefit is smaller memory footprint by using references to singleton enums
-    fun getConnections(at: Tile): Set<Tile> {
-        val listTiles = ArrayList<Tile>()
-        for (dir: Directions in getProperties(at).connections) {
-            //Use the ghost of linear algebra to identify potential neighbor tiles
-            val candidateTile = Tile(Pair(at.loc.first + dir.dif.first, at.loc.second + dir.dif.second))
-
-            //Ensure that the tile is within bounds
-            if(candidateTile.loc.first > 0 &&
-                candidateTile.loc.second > 0 &&
-                candidateTile.loc.first < tiles.data.size &&
-                candidateTile.loc.second < tiles.data[candidateTile.loc.first].size) {
-                    listTiles.add(candidateTile)
-            }
-        }
-        return listTiles.toSet()
-    }
+    //TODO: toString method
+    //Reads array left to right, top to bottom
+    //Only looks at SOUTH and EAST connections
+    //Either connection exists or it does not, whitespace character for exists, some block-appearing char for not
+    //Needs one monowidth char space between each column of array
+    //Needs one line between each row, line containing vertical connections
 }
