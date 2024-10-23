@@ -25,16 +25,16 @@ enum class Directions(val value: Pair<Int, Int>) {
     //Return the opposite direction
     abstract fun opposite(): Directions
 
-    fun all(): MutableSet<Directions> {
-        return mutableSetOf(NORTH, SOUTH, EAST, WEST)
-    }
-
     fun x():Int {
         return value.first
     }
 
     fun y():Int {
         return value.second
+    }
+
+    companion object {
+        val ALL = setOf(NORTH, EAST, WEST, SOUTH)
     }
 
 }

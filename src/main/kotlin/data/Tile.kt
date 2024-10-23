@@ -1,6 +1,5 @@
 package technology.zim.data
 
-import technology.zim.MazeFinder
 import technology.zim.World
 
 class Tile(val value: Pair<Int, Int>): Comparable<Tile> {
@@ -31,18 +30,26 @@ class Tile(val value: Pair<Int, Int>): Comparable<Tile> {
         }
     }
 
+    //Duplicating code from getAdjacent shaved off 100ms
+    //I'm keeping it
     fun getAdjacentTiles(explored:Boolean): Set<Tile> {
-        val result = mutableSetOf<Tile>()
-        getAdjacent(explored).forEach {
-            pair ->
-            result.add(pair.first)
+        val adj = mutableSetOf<Tile>()
+        val dirs = Directions.ALL
+
+        dirs.forEach { dir ->
+            val candidateTile = this + dir
+            //Ensure that the tile is within bounds
+            if(candidateTile.isInBounds() && candidateTile.getProperties().visited == explored)
+            {
+                adj.add(candidateTile)
+            }
         }
-        return result
+        return adj
     }
 
     fun getAdjacent(explored:Boolean): Set<Pair<Tile, Directions>> {
         val adj = mutableSetOf<Pair<Tile, Directions>>()
-        val dirs = Directions.NORTH.all()
+        val dirs = Directions.ALL
 
         dirs.forEach { dir ->
             val candidateTile = this + dir

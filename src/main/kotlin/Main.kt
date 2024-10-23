@@ -14,8 +14,10 @@ class HierarchicalPathfinding {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val n = 1000
+            val n = 5000
+            println("Building world")
             World.setSize(n, n)
+            println("Start")
             val startTime = System.currentTimeMillis()
             MazeFinder.primsAlgorithm()
             val endTime = System.currentTimeMillis()

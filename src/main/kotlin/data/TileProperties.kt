@@ -1,8 +1,5 @@
 package technology.zim.data
 
-import technology.zim.World
-import technology.zim.World.tiles
-
 //Data holder for a Tile
 //Should contain a mutable set of connected directions
 //Later, can hold jumps to other locations other such fancy features

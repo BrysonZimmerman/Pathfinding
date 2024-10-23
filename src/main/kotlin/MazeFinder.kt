@@ -6,8 +6,6 @@ import technology.zim.data.Tile
 import technology.zim.data.TileProperties
 import technology.zim.util.TrimmableArrayList
 import kotlin.collections.ArrayList
-import kotlin.collections.forEach
-import kotlin.random.Random
 
 
 //Build the maze

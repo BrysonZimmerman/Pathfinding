@@ -5,22 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="741ceb24-e493-47c1-9f25-1dbd8b151381" name="Changes" comment="Implemented MazeFinder, significant changes to supporting data structures to match developed understanding of Kotlin and Object-Oriented philosophy">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/util/TrimmableArrayList.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/MazeFinderTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/TileTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/TrimmableArrayListTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Mazefinder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Mazefinder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/World.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/World.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Mazefinder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/MazeFinder.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Directions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Directions.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Tile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Tile.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/TileProperties.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/TileProperties.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/WorldData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/WorldData.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +113,7 @@
     <setting file="file://$PROJECT_DIR$/src/main/kotlin/util/TrimmableArrayList.kt" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -168,6 +159,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Bryson/Documents/GitHub/HierarchicalPathfinding",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -361,8 +353,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
       </set>
     </attachedChunks>
   </component>
@@ -379,6 +371,7 @@
       <workItem from="1729647683265" duration="4068000" />
       <workItem from="1729689482885" duration="6548000" />
       <workItem from="1729708627987" duration="3017000" />
+      <workItem from="1729712667391" duration="3180000" />
     </task>
     <task id="LOCAL-00001" summary="Project Setup">
       <option name="closed" value="true" />
