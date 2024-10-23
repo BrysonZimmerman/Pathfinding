@@ -1,12 +1,12 @@
 package technology.zim.data
 
 enum class Directions(val value: Pair<Int, Int>) {
-    NORTH(Pair(0, 1)) {
+    NORTH(Pair(0, -1)) {
         override fun opposite(): Directions {
             return SOUTH
         }
     },
-    SOUTH(Pair(0, -1)) {
+    SOUTH(Pair(0, 1)) {
         override fun opposite(): Directions {
             return NORTH
         }
@@ -27,6 +27,14 @@ enum class Directions(val value: Pair<Int, Int>) {
 
     fun all(): MutableSet<Directions> {
         return mutableSetOf(NORTH, SOUTH, EAST, WEST)
+    }
+
+    fun x():Int {
+        return value.first
+    }
+
+    fun y():Int {
+        return value.second
     }
 
 }

@@ -11,6 +11,10 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation(kotlin("stdlib-jdk8"))
+    // https://mvnrepository.com/artifact/it.unimi.dsi/dsiutils
+    implementation("it.unimi.dsi:dsiutils:2.7.3")
+
 }
 
 tasks.test {
@@ -18,4 +22,5 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(11)
+    jvmToolchain(8)
 }

@@ -4,20 +4,23 @@ package technology.zim.data
 
 
 @JvmInline
-value class WorldData(val data: ArrayList<ArrayList<TileProperties>>) {
+value class WorldData(val value: ArrayList<ArrayList<TileProperties>>) {
     fun setSize(xmin : Int, ymin : Int) {
+        //println("WorldData setting to: " + xmin + ", " + ymin)
         //Fill every column with an ArrayList of TileProperties
-        with(data) {
-            this.ensureCapacity(xmin)
-            this.fill(ArrayList<TileProperties>())
+        value.removeAll({true})
+
+        for(i in 0..xmin-1) {
+            value.add(ArrayList<TileProperties>())
         }
 
         //Fill every row with TileProperties
-        for(y in data) {
-            with(y) {
-                this.ensureCapacity((ymin))
-                this.fill(TileProperties())
+        for(x in value) {
+            for(i in 0..ymin-1) {
+                x.add(TileProperties())
             }
         }
+
+        //println("WorldData now sized at: " + value.size + ", " + value[0].size)
     }
 }

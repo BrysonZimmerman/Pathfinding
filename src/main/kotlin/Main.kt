@@ -9,6 +9,21 @@ Minimum int size is probably 32 or 64 bit, so huge memory waste if that's used
 Abandon fancy stretch goals, just get pathfinding done and scale it up to demonstrate large scale
  */
 
-fun main() {
-    println("Hello World!")
+class HierarchicalPathfinding {
+
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) {
+            val n = 1000
+            World.setSize(n, n)
+            val startTime = System.currentTimeMillis()
+            MazeFinder.primsAlgorithm()
+            val endTime = System.currentTimeMillis()
+
+            println(World.toString())
+            println(n*n)
+            println((endTime - startTime).toString() + "ms")
+        }
+    }
+
 }

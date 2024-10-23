@@ -18,15 +18,55 @@ import java.util.*
 
 object World {
     //Default size should be 20
-    val tiles = WorldData(ArrayList<ArrayList<TileProperties>>(20))
+    val tiles = WorldData(ArrayList<ArrayList<TileProperties>>())
 
     //Returns a coordinate pair
     fun getRandomLocation(): Tile {
-        return Tile(Pair((0..tiles.data.size).random(), (0..tiles.data[0].size).random()))
+        return Tile(Pair((0..tiles.value.size-1).random(), (0..tiles.value[0].size-1).random()))
     }
 
     fun setSize(x: Int, y: Int) {
         tiles.setSize(x, y)
+    }
+
+    //TODO: https://en.wikipedia.org/wiki/Box-drawing_characters
+    //^ make the maze look like a maze
+    override fun toString(): String {
+        val em = ' ' //Empty character
+        val fi = '█' //Filled character
+        val dot = '•'
+
+        val str = StringBuilder()
+
+
+
+        //Reading left to right, top to bottom - can do a simple for each on the rows
+        for(y in 0..tiles.value[0].size- 1) {
+            //Upper line: Print each tile, print right-hand connections
+            for (x in 0..tiles.value[0].size - 1) {
+                str.append(fi)
+                if(tiles.value[x][y].isEast())
+                    str.append(fi)
+                else
+                    str.append(em)
+            }
+            //End upper line
+            str.appendLine()
+
+            //Lower line: Print downward connections
+            for (x in 0..tiles.value.size - 1) {
+                if(tiles.value[x][y].isSouth()) {
+                    str.append(fi)
+                }
+                else
+                    str.append(em)
+                str.append(em)
+            }
+            //End lower line
+            str.appendLine()
+        }
+        str.appendLine()
+        return str.toString()
     }
 
     //TODO: toString method

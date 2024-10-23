@@ -1,9 +1,9 @@
 package technology.zim.data
 
+import technology.zim.MazeFinder
 import technology.zim.World
 
-@JvmInline
-value class Tile(val value: Pair<Int, Int>) {
+class Tile(val value: Pair<Int, Int>): Comparable<Tile> {
 
     constructor(x: Int, y: Int): this(Pair(x, y))
 
@@ -16,22 +16,55 @@ value class Tile(val value: Pair<Int, Int>) {
         if(candidateTile.isInBounds())
         {
             this.getProperties().add(dir)
-            (this + dir).getProperties().add(dir.opposite())
+            candidateTile.getProperties().add(dir.opposite())
+            candidateTile.getProperties().visited = true
+            candidateTile.getProperties().visited = true
         }
         else {
-            //TODO: Consider just silently not connecting out-of-bounds values
+            //Shouldn't matter whether we skip connecting an out-of-bounds item
+            //Should also never get to the point where the attempt is made
             println("Attempted to connect to outside bounds: <" +
-                    candidateTile.value.first + ", " + candidateTile.value.second
-                    + "> From Tile: <" + this.value.first + ", " +
-                    this.value.second + ">")
+                    candidateTile.x() + ", " + candidateTile.y()
+                    + "> From Tile: <" + x() + ", " +
+                    y() + ">")
             return
         }
     }
 
+    fun getAdjacentTiles(explored:Boolean): Set<Tile> {
+        val result = mutableSetOf<Tile>()
+        getAdjacent(explored).forEach {
+            pair ->
+            result.add(pair.first)
+        }
+        return result
+    }
+
+    fun getAdjacent(explored:Boolean): Set<Pair<Tile, Directions>> {
+        val adj = mutableSetOf<Pair<Tile, Directions>>()
+        val dirs = Directions.NORTH.all()
+
+        dirs.forEach { dir ->
+            val candidateTile = this + dir
+            //Ensure that the tile is within bounds
+            if(candidateTile.isInBounds() && candidateTile.getProperties().visited == explored)
+            {
+                adj.add(Pair(candidateTile, dir))
+            }
+        }
+        return adj
+    }
+
+
+    fun hasConnections(): Boolean {
+        return getProperties().connections.isNotEmpty()
+    }
+
+
     //Gets Tile objects for all connected directions
     //Used for finding a path through the maze
-    fun getConnections(): MutableSet<Tile> {
-        val listTiles = mutableSetOf<Tile>()
+    fun getConnections(): ArrayList<Tile> {
+        val listTiles = ArrayList<Tile>()
         for (dir: Directions in getProperties().connections) {
             //Use the ghost of linear algebra to identify potential neighbor tiles
             listTiles.add(this+dir)
@@ -39,25 +72,63 @@ value class Tile(val value: Pair<Int, Int>) {
         return listTiles
     }
 
+    //Arguments could be made for either World or Tile knowing whether a Tile is in bounds
     fun isInBounds(): Boolean {
-        return value.first > 0 &&
-            value.second > 0 &&
-            value.first < World.tiles.data.size &&
-            value.second < World.tiles.data[value.second].size
+        return x() >= 0 &&
+            y() >= 0 &&
+            x() < World.tiles.value.size  &&
+            y() < World.tiles.value[0].size
     }
 
     //Get the properties of the tile at the given coordinates
     fun getProperties(): TileProperties {
-        return World.tiles.data.elementAt(value.first).elementAt(value.second)
+        return World.tiles.value[x()][y()]
     }
 
     //Get tile at given direction
     operator fun plus(dir: Directions): Tile {
-        return Tile(value.first + dir.value.first, value.second + dir.value.second)
+        return Tile(x() + dir.x(), y() + dir.y())
     }
 
     //Get tile at direction opposite of given direction
     operator fun minus(dir: Directions): Tile {
-        return Tile(value.first - dir.value.first, value.second - dir.value.second)
+        return Tile(x() - dir.x(), y() - dir.y())
     }
+
+    fun x(): Int {
+        return value.first
+    }
+
+    fun y():Int {
+        return value.second
+    }
+
+    override fun toString():String {
+        return "<" + value.first + ", " + value.second + ">"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Tile) return false
+
+        if (x() != other.x() || y() != other.y()) return false
+
+        return true
+    }
+
+    override fun compareTo(other: Tile): Int {
+        if(x() == other.x() && y() == other.y())
+            return 0
+        else if(y() > other.y())
+            return 1
+        else if(x() > other.x())
+            return 1
+        else
+            return -1
+    }
+
+    override fun hashCode(): Int {
+        return value.hashCode()
+    }
+
 }

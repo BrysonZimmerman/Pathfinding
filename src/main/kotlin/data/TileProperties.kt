@@ -11,9 +11,10 @@ import technology.zim.World.tiles
 
 
 
-@JvmInline
-value class TileProperties(val connections:MutableSet<Directions> = mutableSetOf<Directions>()) {
-
+/*@JvmInline
+value */
+class TileProperties(val connections:MutableSet<Directions> = mutableSetOf<Directions>()) {
+    var visited = false
     //Remove a direction from the list of connections
     fun remove(dir: Directions) {
         connections.remove(dir)
@@ -23,6 +24,22 @@ value class TileProperties(val connections:MutableSet<Directions> = mutableSetOf
     //Should only be accessed by the Tile class
     fun add(dir: Directions) {
         connections.add(dir)
+    }
+
+    fun isWest(): Boolean {
+        return connections.contains(Directions.WEST)
+    }
+
+    fun isEast():Boolean {
+        return connections.contains(Directions.EAST)
+    }
+
+    fun isNorth(): Boolean {
+        return connections.contains(Directions.NORTH)
+    }
+
+    fun isSouth():Boolean {
+        return connections.contains(Directions.SOUTH)
     }
 
 }

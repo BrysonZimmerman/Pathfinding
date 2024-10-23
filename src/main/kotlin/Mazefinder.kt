@@ -1,7 +1,13 @@
 package technology.zim
 
+import it.unimi.dsi.util.XoRoShiRo128PlusRandom
 import technology.zim.data.Directions
 import technology.zim.data.Tile
+import technology.zim.data.TileProperties
+import technology.zim.util.TrimmableArrayList
+import kotlin.collections.ArrayList
+import kotlin.collections.forEach
+import kotlin.random.Random
 
 
 //Build the maze
@@ -14,64 +20,60 @@ import technology.zim.data.Tile
 //http://weblog.jamisbuck.org/2011/1/10/maze-generation-prim-s-algorithm
 //http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm
 
-class MazeFinder {
-    val visited = ArrayList<ArrayList<Boolean>>(World.tiles.data.size).apply {
-        this.forEach() { element -> element.fill(false) }
-    }
-    val frontier = mutableSetOf<Tile>()
+object MazeFinder {
+    val frontier = TrimmableArrayList<Tile>()
+    var startingTile = World.getRandomLocation()
+    val randGen = XoRoShiRo128PlusRandom()
+
+    val tempInGraph = ArrayList<Pair<Tile, TileProperties>>()
 
     fun primsAlgorithm() {
+        cleanUp()
+        //val randomGen = Random
+
+
+
+        startingTile = World.getRandomLocation()
+        startingTile.getProperties().visited = true
         //Choose an arbitrary vertex from G (the graph), and add it to some (initially empty) set V.
-        frontier.add(World.getRandomLocation())
+        frontier.addAll(startingTile.getAdjacentTiles(false))
 
         //Choose a random edge from G, that connects a vertex in V with another vertex not in V.
         var current: Tile
-        var prospect: Pair<Tile, Directions>
-        var possibleTiles: Set<Pair<Tile, Directions>>
+        var inGraph: Pair<Tile, Directions>
+        var adjacentExplored: Set<Pair<Tile, Directions>>
         while(frontier.isNotEmpty()) {
             //Grab a random tile from the frontier, mark it as visited
-            current = frontier.random()
-            frontier.remove(current)
-            visited[current.value.first][current.value.second] = true
+            val random = randGen.nextInt(frontier.size())
+            current = frontier.data[random]
+            current.getProperties().visited = true
+            frontier.removeAt(random)
 
-            //Find all adjacent tiles to that tile
-            possibleTiles = getUnexploredAdjacent(current)
 
-            //It's possible that this frontier tile has no unexplored neighbors, in which case removing it from the frontier is enough
-            if(possibleTiles.isNotEmpty()) {
-                //Grab a random tile from the possible set
-                prospect = possibleTiles.random()
+            //Find adjacent tiles that are in the graph
+            adjacentExplored = current.getAdjacent(true)
 
-                //Connect it to the current tile
-                current.connect(prospect.second)
+            //Select a random tile from possibleTiles
+            inGraph = adjacentExplored.elementAt(randGen.nextInt(adjacentExplored.size))
 
-                //Add its adjacent unexplored tiles to frontier
-                frontier.addAll(getUnexploredAdjacentWithoutDirection(prospect.first))
-            }
+            //Connect the frontier tile to the graph
+            current.connect(inGraph.second)
+            //Add current's unexplored tiles to the frontier, if not already in frontier
+            frontier.addAll(current.getAdjacentTiles(false))
+
+
+            //print(World.toString())
+            //println("--------------------------------------------")
+
         }
+        println("prim")
     }
 
-    fun getUnexploredAdjacentWithoutDirection(tile: Tile): Set<Tile> {
-        val result = mutableSetOf<Tile>()
-        getUnexploredAdjacent(tile).forEach { pair -> result.add(pair.first)}
-        return result
+
+    fun cleanUp() {
+        //Clean up the frontier
+        frontier.clear()
     }
-
-    fun getUnexploredAdjacent(tile: Tile): Set<Pair<Tile, Directions>> {
-            val adj = mutableSetOf<Pair<Tile, Directions>>()
-            val dirs = Directions.NORTH.all()
-
-            dirs.forEach { dir ->
-                val candidateTile = tile + dir
-                //Ensure that the tile is within bounds
-                if(candidateTile.isInBounds() && !visited[candidateTile.value.first][candidateTile.value.second])
-                {
-                    adj.add(Pair(candidateTile, dir))
-                }
-            }
-            return adj
-    }
-
     //Todo: Consider growing World with null values, then use Mazefinder to instantiate as the maze is developed
     //Consequence: World becomes nullable, requiring null checks to be added in order to avoid... issues
     //It's probable that this will only be needed at large scales
