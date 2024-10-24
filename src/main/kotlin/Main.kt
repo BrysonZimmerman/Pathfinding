@@ -14,7 +14,7 @@ class HierarchicalPathfinding {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val n = 5000
+            val n = 10
             println("Building world")
             World.setSize(n, n)
             println("Start")

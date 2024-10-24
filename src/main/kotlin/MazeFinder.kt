@@ -31,31 +31,37 @@ object MazeFinder {
 
 
 
+
+        //Prime the graph with the first connection, which marks the first visited Tiles
         startingTile = World.getRandomLocation()
-        startingTile.getProperties().visited = true
+        val tmpIndex = randGen.nextInt(Directions.ALL.size)
+        startingTile.connect(Directions.ALL.get(tmpIndex))
         //Choose an arbitrary vertex from G (the graph), and add it to some (initially empty) set V.
         frontier.addAll(startingTile.getAdjacentTiles(false))
-
+        frontier.addAll((startingTile + Directions.ALL.get(tmpIndex)).getAdjacentTiles(false))
         //Choose a random edge from G, that connects a vertex in V with another vertex not in V.
         var current: Tile
-        var inGraph: Pair<Tile, Directions>
-        var adjacentExplored: Set<Pair<Tile, Directions>>
+        var inGraph: Tile
+        var adjacentExplored: Set<Tile>
         while(frontier.isNotEmpty()) {
             //Grab a random tile from the frontier, mark it as visited
             val random = randGen.nextInt(frontier.size())
-            current = frontier.data[random]
-            current.getProperties().visited = true
+            current = frontier.data.get(random)
+            current.getProperties().visited()
             frontier.removeAt(random)
 
 
             //Find adjacent tiles that are in the graph
-            adjacentExplored = current.getAdjacent(true)
+            adjacentExplored = current.getAdjacentTiles(true)
+
+            if(adjacentExplored.isEmpty())
+                println("No explored adjacent tiles found")
 
             //Select a random tile from possibleTiles
             inGraph = adjacentExplored.elementAt(randGen.nextInt(adjacentExplored.size))
 
             //Connect the frontier tile to the graph
-            current.connect(inGraph.second)
+            current.connect(Directions.convertModifier(current.value - inGraph.value))
             //Add current's unexplored tiles to the frontier, if not already in frontier
             frontier.addAll(current.getAdjacentTiles(false))
 

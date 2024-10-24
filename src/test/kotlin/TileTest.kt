@@ -15,10 +15,10 @@ class TileTest {
     }
 
     @Test
-    fun connectBottomToSouthInvalid() {
+    fun connectOutOfBoundsInvalid() {
         val bottom = Tile(1, 9)
-        bottom.connect(SOUTH)
-        assertFalse(bottom.getConnections().contains(bottom+SOUTH))
+        bottom.connect(DOWN)
+        assertFalse(bottom.getProperties().isSouth())
     }
 
     @Test
@@ -40,18 +40,13 @@ class TileTest {
         assertFalse(tooSouth.isInBounds())
     }
 
-    @Test
-    fun allDirectionsTest() {
-        val dirs = NORTH.all()
-        assert(dirs.containsAll(listOf(NORTH, EAST, SOUTH, WEST)))
-    }
 
     @Test
     fun connectNorthSouthTest() {
         //Assumes the world is at least 10, 10 in size as set up by this test class
         val someTile = Tile(5, 5)
-        someTile.connect(NORTH)
-        val northTile = someTile + NORTH
+        someTile.connect(UP)
+        val northTile = someTile + UP
 
         assert(someTile.getProperties().isNorth())
         assertFalse(someTile.getProperties().isSouth())
@@ -67,16 +62,16 @@ class TileTest {
     @Test
     fun adjacentTest() {
         val someTile = Tile(1, 1)
-        val northTile = someTile + NORTH
-        val southTile = someTile + SOUTH
-        val westTile = someTile + WEST
-        val eastTile = someTile + EAST
+        val northTile = someTile + UP
+        val southTile = someTile + DOWN
+        val westTile = someTile + LEFT
+        val eastTile = someTile + RIGHT
 
         //Generating raw tiles without built-in bounds checking, do it here
         if(northTile.isInBounds())
-            northTile.getProperties().visited = true
+            northTile.getProperties().visited()
         if(southTile.isInBounds())
-            southTile.getProperties().visited = true
+            southTile.getProperties().visited()
 
 
         val adjacent = someTile.getAdjacentTiles(false)

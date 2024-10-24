@@ -20,9 +20,13 @@ object World {
     //Default size should be 20
     val tiles = WorldData(ArrayList<ArrayList<TileProperties>>())
 
+    fun update(tile: Tile, to: TileProperties) {
+       tiles.value[tile.x()][tile.y()] = to
+    }
+
     //Returns a coordinate pair
     fun getRandomLocation(): Tile {
-        return Tile(Pair((0..tiles.value.size-1).random(), (0..tiles.value[0].size-1).random()))
+        return Tile((0..tiles.value.size-1).random(), (0..tiles.value.get(0).size-1).random())
     }
 
     fun setSize(x: Int, y: Int) {
@@ -45,7 +49,7 @@ object World {
             //Upper line: Print each tile, print right-hand connections
             for (x in 0..tiles.value[0].size - 1) {
                 str.append(fi)
-                if(tiles.value[x][y].isEast())
+                if(tiles.value.get(x).get(y).isEast())
                     str.append(fi)
                 else
                     str.append(em)
@@ -55,7 +59,7 @@ object World {
 
             //Lower line: Print downward connections
             for (x in 0..tiles.value.size - 1) {
-                if(tiles.value[x][y].isSouth()) {
+                if(tiles.value.get(x).get(y).isSouth()) {
                     str.append(fi)
                 }
                 else

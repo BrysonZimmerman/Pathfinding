@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="741ceb24-e493-47c1-9f25-1dbd8b151381" name="Changes" comment="Implemented MazeFinder, significant changes to supporting data structures to match developed understanding of Kotlin and Object-Oriented philosophy">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Mazefinder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/MazeFinder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/MazeFinder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/MazeFinder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/World.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/World.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Directions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Directions.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Tile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Tile.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/TileProperties.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/TileProperties.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/WorldData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/WorldData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/TileTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/TileTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
