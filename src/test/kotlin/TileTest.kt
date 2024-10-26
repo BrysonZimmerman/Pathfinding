@@ -14,8 +14,37 @@ class TileTest {
         MazeFinder.cleanUp()
     }
 
+    //Confirm that an empty map acts like it is empty
+    @Test
+    fun emptyTest() {
+        val tile = Tile(3, 3)
+        var adjacent = tile.getAdjacentTiles(false)
+        assert(adjacent.size == 4)
+
+        var explored = tile.getAdjacentTiles(true)
+        assert(explored.isEmpty())
+
+
+    }
+
+    @Test
+    fun squareTest() {
+        val startTile = Tile(1, 1)
+        var endTile = startTile
+
+        endTile = endTile + LEFT
+        endTile = endTile + UP
+        endTile = endTile + RIGHT
+        endTile = endTile + DOWN
+        assert(startTile == endTile)
+    }
+
+
+
     @Test
     fun connectOutOfBoundsInvalid() {
+        println("Following out of bounds log entries are expected")
+        println("-------------------------------------------------------------")
         val bottom = Tile(1, 9)
         bottom.connect(DOWN)
         assertFalse(bottom.getProperties().isSouth())
@@ -23,6 +52,7 @@ class TileTest {
 
     @Test
     fun outOfBoundsTest() {
+
         val tooNorth = Tile(1, -1)
         val tooWest = Tile(-1, 1)
         val tooEast = Tile(10, 1)
@@ -31,6 +61,7 @@ class TileTest {
         val northIn = Tile(0, 0)
         val southIn = Tile(9, 9)
 
+        println("-------------------------------------------------------------")
         assert(northIn.isInBounds())
         assert(southIn.isInBounds())
 

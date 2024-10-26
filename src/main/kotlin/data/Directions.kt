@@ -17,17 +17,17 @@ enum class Directions(val dir: Int) {
                 else -> NONE
             }
         }
-        fun getModifier(dir: Directions): Long {
+        fun getModifier(dir: Directions): ULong {
             return when(dir) {
                 UP -> NORTH
                 DOWN -> SOUTH
                 LEFT -> WEST
                 RIGHT -> EAST
-                else -> 0L
+                else -> NONEMOD
             }
         }
 
-        fun convertModifier(mod: Long): Directions {
+        fun convertModifier(mod: ULong): Directions {
             return when(mod) {
                 NORTH -> UP
                 SOUTH -> DOWN
@@ -37,12 +37,12 @@ enum class Directions(val dir: Int) {
             }
         }
 
-        const val SOUTH: Long = 0x1L
-        const val NORTH: Long = -0x1L
-        const val WEST: Long = -0x100000000L
-        const val EAST: Long = 0x100000000L
+        const val SOUTH: ULong = 1UL
+        const val NORTH: ULong = 4294967295UL
+        const val WEST: ULong = 18446744069414584320UL
+        const val EAST: ULong = 4294967296UL
         val ALL = arrayOf(UP, DOWN, LEFT, RIGHT)
-        const val NONEMOD = 0L
+        const val NONEMOD = 0UL
     }
 
     fun inv(): Int {

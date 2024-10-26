@@ -2,16 +2,20 @@ package technology.zim.data
 
 import technology.zim.World
 
+
+
 @JvmInline
-value class Tile(val value: Long) {
+value class Tile(private val value: ULong) {
 
     constructor(x: Int, y: Int): this(pack(x, y)) {
+
     }
 
     fun connect(candidateTile: Tile) {
-        val dir = Directions.convertModifier(candidateTile.value - this.value)
+        val dir = toward(candidateTile)
         connect(dir)
     }
+
     //Connect two tiles together.
     //Calls utility function on the connected cell
     fun connect(dir: Directions) {
@@ -20,12 +24,12 @@ value class Tile(val value: Long) {
         //Ensure that the tile is within bounds
         if(candidateTile.isInBounds() && this.isInBounds())
         {
-            World.tiles.value[x()][y()] = getProperties().add(dir)
-            World.tiles.value[candidateTile.x()][candidateTile.y()] = candidateTile.getProperties().add(Directions.opposite(dir))
-
+            if(this.y() == World.sizeY - 1 && dir == Directions.DOWN)
+                println("wat")
+            World.update(this, getProperties().add(dir))
+            World.update(candidateTile, candidateTile.getProperties().add(candidateTile.toward(this)))
         }
         else {
-            //Shouldn't matter whether we skip connecting an out-of-bounds item
             //Should also never get to the point where the attempt is made
             println("Attempted to connect to outside bounds: <" +
                     candidateTile.x() + ", " + candidateTile.y()
@@ -35,20 +39,25 @@ value class Tile(val value: Long) {
         }
     }
 
-    //Duplicating code from getAdjacent shaved off 100ms
-    //I'm keeping it
+    fun toward(otherTile: Tile): Directions {
+        return Directions.convertModifier(otherTile.value - this.value)
+    }
     fun getAdjacentTiles(explored:Boolean): Set<Tile> {
         val adj = mutableSetOf<Tile>()
         val dirs = Directions.ALL
 
         dirs.forEach { dir ->
             val candidateTile = this + dir
+
             //Ensure that the tile is within bounds
             if(candidateTile.isInBounds() && candidateTile.getProperties().visited() == explored)
             {
+                println("$this+$dir --> $candidateTile")
                 adj.add(candidateTile)
             }
         }
+        if(adj.isEmpty() && explored)
+            println("no explored found")
         return adj
     }
 
@@ -77,41 +86,33 @@ value class Tile(val value: Long) {
         return this + Directions.getModifier(dir)
     }
 
-    operator fun plus(mod: Long): Tile {
-        return Tile(this.value + mod)
+    operator fun plus(mod: ULong): Tile {
+        return Tile(this.x() + x(mod), this.y() + y(mod))
     }
 
-    operator fun plus(tile: Tile): Tile {
-        return Tile(x() + tile.x(), y() + tile.y())
-    }
 
+    fun getCoordinates(): Pair<Int, Int> {
+        return Pair(x(), y())
+    }
 
     fun x(): Int {
-        return (value shr 32).toInt()
+        return x(value)
     }
 
-    //Gets the x value of the given coordinate form
-    fun x(coord: Tile):Int {
-        return coord.x()
+    //Gets the x value of the Long as though it were in coordinate form
+    fun x(coords: ULong): Int {
+        return (coords shr 32).toLong().toInt()
     }
 
-    //Gets the x value of the coordinate form of the given direction
-    fun x(dir: Directions):Int {
-        return (this + dir).x()
-    }
+    //Bitwise and to ensure the left-hand half of the Long is zero'd, then convert toInt()
 
     fun y():Int {
-        return value.toInt()
+        return y(value)
     }
 
-    //Gets the y value of the given coordinate form
-    fun y(coord: Tile):Int {
-        return coord.y()
-    }
-
-    //Gets the y value of the coordinate form of the given direction
-    fun y(dir: Directions):Int {
-        return (this + dir).y()
+    //Get the y value from a Long as though it were a Tile
+    fun y(coords: ULong): Int {
+        return coords.toLong().toInt()
     }
 
     override fun toString():String {
@@ -119,8 +120,8 @@ value class Tile(val value: Long) {
     }
 
     companion object {
-        fun pack(x: Int, y: Int):Long {
-            return (x.toLong() shl 32) + y.toLong()
+        fun pack(mostSignificantBits: Int, leastSignificantBits: Int): ULong {
+            return (mostSignificantBits.toUInt().toULong() shl 32) or leastSignificantBits.toUInt().toULong()
         }
     }
 

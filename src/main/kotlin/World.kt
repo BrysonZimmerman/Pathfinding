@@ -19,6 +19,8 @@ import java.util.*
 object World {
     //Default size should be 20
     val tiles = WorldData(ArrayList<ArrayList<TileProperties>>())
+    var sizeX = 10
+    var sizeY = 10
 
     fun update(tile: Tile, to: TileProperties) {
        tiles.value[tile.x()][tile.y()] = to
@@ -26,10 +28,12 @@ object World {
 
     //Returns a coordinate pair
     fun getRandomLocation(): Tile {
-        return Tile((0..tiles.value.size-1).random(), (0..tiles.value.get(0).size-1).random())
+        return Tile((0..<sizeX).random(), (0..<sizeY).random())
     }
 
     fun setSize(x: Int, y: Int) {
+        sizeX = x
+        sizeY = y
         tiles.setSize(x, y)
     }
 
