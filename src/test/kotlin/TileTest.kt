@@ -48,6 +48,9 @@ class TileTest {
         someTile.connect(UP)
         val northTile = someTile + UP
 
+        assert(someTile.getAdjacentTiles(true).contains(northTile))
+
+
         assert(someTile.getProperties().isNorth())
         assertFalse(someTile.getProperties().isSouth())
         assertFalse(someTile.getProperties().isWest())
@@ -57,6 +60,7 @@ class TileTest {
         assertFalse(northTile.getProperties().isNorth())
         assertFalse(northTile.getProperties().isWest())
         assertFalse(northTile.getProperties().isEast())
+        assert(northTile.getAdjacentTiles(true).contains(someTile))
     }
 
     @Test
@@ -67,13 +71,10 @@ class TileTest {
         val westTile = someTile + LEFT
         val eastTile = someTile + RIGHT
 
-        //Generating raw tiles without built-in bounds checking, do it here
-        if(northTile.isInBounds())
-            northTile.getProperties().visited()
-        if(southTile.isInBounds())
-            southTile.getProperties().visited()
+        someTile.connect(northTile)
+        someTile.connect(DOWN)
 
-
+        val world = World.tiles
         val adjacent = someTile.getAdjacentTiles(false)
         assertFalse(adjacent.contains(northTile))
         assertFalse(adjacent.contains(southTile))

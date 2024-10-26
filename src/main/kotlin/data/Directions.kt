@@ -5,12 +5,18 @@ enum class Directions(val dir: Int) {
     UP(1),
     DOWN(2),
     LEFT(4),
-    RIGHT(8),
-    VISITED(16)
-
-    ;
+    RIGHT(8);
 
     companion object {
+        fun opposite(dir: Directions): Directions {
+            return when(dir) {
+                UP -> DOWN
+                DOWN -> UP
+                LEFT -> RIGHT
+                RIGHT -> LEFT
+                else -> NONE
+            }
+        }
         fun getModifier(dir: Directions): Long {
             return when(dir) {
                 UP -> NORTH
@@ -41,11 +47,5 @@ enum class Directions(val dir: Int) {
 
     fun inv(): Int {
         return dir.inv()
-    }
-
-    fun opposite(dir: Long): Long {
-        val x = (dir shr 32).toInt() * -1
-        val y = dir.toInt() * -1
-        return x.toLong() shl 32 + y
     }
 }

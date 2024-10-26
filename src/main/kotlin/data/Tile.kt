@@ -9,13 +9,8 @@ value class Tile(val value: Long) {
     }
 
     fun connect(candidateTile: Tile) {
-        val dir = Directions.convertModifier(this.value - candidateTile.value)
-        if(candidateTile.isInBounds()) {
-            World.update(this, getProperties().add(dir))
-        }
-        else {
-            throw(ArrayIndexOutOfBoundsException("Cannot connect to an out of bounds tile"))
-        }
+        val dir = Directions.convertModifier(candidateTile.value - this.value)
+        connect(dir)
     }
     //Connect two tiles together.
     //Calls utility function on the connected cell
@@ -23,10 +18,11 @@ value class Tile(val value: Long) {
         val candidateTile = this+dir
 
         //Ensure that the tile is within bounds
-        if(candidateTile.isInBounds())
+        if(candidateTile.isInBounds() && this.isInBounds())
         {
             World.tiles.value[x()][y()] = getProperties().add(dir)
-            World.tiles.value[candidateTile.x()][candidateTile.y()] = candidateTile.getProperties().add(dir)
+            World.tiles.value[candidateTile.x()][candidateTile.y()] = candidateTile.getProperties().add(Directions.opposite(dir))
+
         }
         else {
             //Shouldn't matter whether we skip connecting an out-of-bounds item
@@ -78,26 +74,30 @@ value class Tile(val value: Long) {
 
     //Get tile at given direction
     operator fun plus(dir: Directions): Tile {
-        return Tile(x() + x(dir), y() + y(dir))
+        return this + Directions.getModifier(dir)
     }
 
-    //Get tile at direction opposite of given direction
-    operator fun minus(dir: Long): Tile {
-        return Tile(x() - x(dir), y() - y(dir))
+    operator fun plus(mod: Long): Tile {
+        return Tile(this.value + mod)
     }
+
+    operator fun plus(tile: Tile): Tile {
+        return Tile(x() + tile.x(), y() + tile.y())
+    }
+
 
     fun x(): Int {
         return (value shr 32).toInt()
     }
 
     //Gets the x value of the given coordinate form
-    fun x(coord: Long):Int {
-        return (coord shr 32).toInt()
+    fun x(coord: Tile):Int {
+        return coord.x()
     }
 
     //Gets the x value of the coordinate form of the given direction
     fun x(dir: Directions):Int {
-        return (Directions.getModifier(dir) shr 32).toInt()
+        return (this + dir).x()
     }
 
     fun y():Int {
@@ -105,13 +105,13 @@ value class Tile(val value: Long) {
     }
 
     //Gets the y value of the given coordinate form
-    fun y(coord: Long):Int {
-        return coord.toInt()
+    fun y(coord: Tile):Int {
+        return coord.y()
     }
 
     //Gets the y value of the coordinate form of the given direction
     fun y(dir: Directions):Int {
-        return y() + Directions.getModifier(dir).toInt()
+        return (this + dir).y()
     }
 
     override fun toString():String {
