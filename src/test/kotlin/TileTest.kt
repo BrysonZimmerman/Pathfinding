@@ -10,7 +10,6 @@ class TileTest {
     @BeforeTest
     fun setup() {
         World.setSize(10, 10)
-        MazeFinder.cleanUp()
     }
 
     //Confirm that an empty map acts like it is empty

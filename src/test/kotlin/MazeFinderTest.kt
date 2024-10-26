@@ -60,11 +60,4 @@ class MazeFinderTest {
             }
         }
     }
-
-    @Test
-    fun isCleanedUp() {
-        MazeFinder.cleanUp()
-
-        assert(MazeFinder.frontier.isEmpty())
-    }
 }
