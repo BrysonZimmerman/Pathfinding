@@ -3,7 +3,6 @@ package technology.zim
 import it.unimi.dsi.util.XoRoShiRo128PlusRandom
 import technology.zim.data.Directions
 import technology.zim.data.Tile
-import technology.zim.data.TileProperties
 import technology.zim.util.TrimmableArrayList
 import kotlin.collections.ArrayList
 
@@ -35,12 +34,14 @@ object MazeFinder {
         //Prime the graph with the first connection, which marks the first visited Tiles
         startingTile = World.getRandomLocation()
         val tmpIndex = randGen.nextInt(Directions.ALL.size)
-        startingTile.connect(Directions.ALL.get(tmpIndex))
+        val connectorTile = startingTile + Directions.ALL[tmpIndex]
+        startingTile.connect(connectorTile)
+
         tempInGraph.add(startingTile)
-        tempInGraph.add(startingTile + Directions.ALL.get(tmpIndex))
+        tempInGraph.add(connectorTile)
         //Choose an arbitrary vertex from G (the graph), and add it to some (initially empty) set V.
         frontier.addAll(startingTile.getAdjacentTiles(false))
-        frontier.addAll((startingTile + Directions.ALL.get(tmpIndex)).getAdjacentTiles(false))
+        frontier.addAll((connectorTile.getAdjacentTiles(false)))
         //Choose a random edge from G, that connects a vertex in V with another vertex not in V.
         var current: Tile
         var inGraph: Tile

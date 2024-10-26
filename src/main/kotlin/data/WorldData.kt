@@ -5,6 +5,7 @@ package technology.zim.data
 @JvmInline
 value class WorldData(val value: ArrayList<ArrayList<TileProperties>>) {
     fun setSize(xmin : Int, ymin : Int) {
+        val emptyTile = TileProperties(0)
         //println("WorldData setting to: " + xmin + ", " + ymin)
         //Fill every column with an ArrayList of TileProperties
         value.removeAll({true})
@@ -24,6 +25,6 @@ value class WorldData(val value: ArrayList<ArrayList<TileProperties>>) {
     }
 
     companion object {
-        val emptyTile = TileProperties(0)
+
     }
 }
