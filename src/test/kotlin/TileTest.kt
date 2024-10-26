@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Test
 import kotlin.test.BeforeTest
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.TestFactory
 import technology.zim.MazeFinder
 import technology.zim.World
 import technology.zim.data.*
@@ -18,10 +17,10 @@ class TileTest {
     @Test
     fun emptyTest() {
         val tile = Tile(3, 3)
-        var adjacent = tile.getAdjacentTiles(false)
+        val adjacent = tile.getAdjacentTiles(false)
         assert(adjacent.size == 4)
 
-        var explored = tile.getAdjacentTiles(true)
+        val explored = tile.getAdjacentTiles(true)
         assert(explored.isEmpty())
 
 
@@ -107,12 +106,25 @@ class TileTest {
 
         val world = World.tiles
         val adjacent = someTile.getAdjacentTiles(false)
+        val explored = someTile.getAdjacentTiles(true)
+        println("Connections of tiles in adjacent (should be westTile and eastTile)")
+        adjacent.forEach {
+            tile ->
+            println(tile.toString() + ": " + tile.getProperties().toString())
+        }
+
+        println("Connections of tile in explored (should be northTile and southTile")
+        explored.forEach {
+            tile ->
+            println(tile.toString() + ": " + tile.getProperties().toString())
+        }
+
         assertFalse(adjacent.contains(northTile))
         assertFalse(adjacent.contains(southTile))
         assert(adjacent.contains(eastTile))
         assert(adjacent.contains(westTile))
 
-        val explored = someTile.getAdjacentTiles(true)
+
         assert(explored.elementAt(0) == northTile)
 
         assert(explored.contains(northTile))
