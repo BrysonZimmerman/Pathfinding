@@ -1,6 +1,7 @@
 package technology.zim.data
 
 //Data structure wrapper for a set of tiles
+//Todo: Test converting to a single row-major array, multiplying the y value by row size to find the element position
 
 @JvmInline
 value class WorldData(val value: ArrayList<ArrayList<TileProperties>>) {

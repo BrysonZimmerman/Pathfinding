@@ -4,6 +4,7 @@ import technology.zim.data.Tile
 import technology.zim.data.TileProperties
 import technology.zim.data.WorldData
 import java.util.*
+import technology.zim.data.Directions.*
 
 //Singleton object containing a set of tiles
 //Has helper functions included
@@ -17,7 +18,7 @@ import java.util.*
 //  Which currently only contains the edges of the "graph", stored as directions
 
 object World {
-    //Default size should be 20
+    //Default size should be 10
     val tiles = WorldData(ArrayList<ArrayList<TileProperties>>())
     var sizeX = 10
     var sizeY = 10
@@ -51,37 +52,58 @@ object World {
         val str = StringBuilder()
 
 
-
         //Reading left to right, top to bottom - can do a simple for each on the rows
-        for(y in 0..tiles.value[0].size- 1) {
+        for (y in 0..tiles.value[0].size - 1) {
             //Upper line: Print each tile, print right-hand connections
             for (x in 0..tiles.value[0].size - 1) {
-                str.append(fi)
-                if(tiles.value.get(x).get(y).isEast())
-                    str.append(fi)
-                else
-                    str.append(em)
+                str.append(getTileShapeDoubles(World.get(Tile(x, y))))
             }
-            //End upper line
-            str.appendLine()
-
-            //Lower line: Print downward connections
-            for (x in 0..tiles.value.size - 1) {
-                if(tiles.value.get(x).get(y).isSouth()) {
-                    str.append(fi)
-                }
-                else
-                    str.append(em)
-                str.append(em)
-            }
-            //End lower line
             str.appendLine()
         }
         str.appendLine()
         return str.toString()
     }
+    fun getTileShape(tile: TileProperties): Char {
+        return when(tile.connections) {
+            UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir -> '╋'
+            UP.dir+DOWN.dir+LEFT.dir -> '┫'
+            UP.dir+DOWN.dir+RIGHT.dir -> '┣'
+            UP.dir+LEFT.dir+RIGHT.dir -> '┻'
+            DOWN.dir+LEFT.dir+RIGHT.dir -> '┳'
+            UP.dir+LEFT.dir -> '┛'
+            UP.dir + RIGHT.dir -> '┗'
+            DOWN.dir + LEFT.dir -> '┓'
+            DOWN.dir + RIGHT.dir -> '┏'
+            LEFT.dir+RIGHT.dir -> '━'
+            UP.dir+DOWN.dir -> '┃'
+            UP.dir -> '╹'
+            RIGHT.dir -> '╺'
+            DOWN.dir -> '╻'
+            LEFT.dir -> '╸'
+            else -> '•'
+        }
+    }
+    fun getTileShapeDoubles(tile: TileProperties): Char {
+        return when(tile.connections and(MANIFEST.inv()) and(INPATH.inv()) and(CHECKED.inv())) {
+            UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir -> '╬'
+            UP.dir+DOWN.dir+LEFT.dir -> '╣'
+            UP.dir+DOWN.dir+RIGHT.dir -> '╠'
+            UP.dir+LEFT.dir+RIGHT.dir -> '╩'
+            DOWN.dir+LEFT.dir+RIGHT.dir -> '╦'
+            UP.dir+LEFT.dir -> '╝'
+            UP.dir + RIGHT.dir -> '╚'
+            DOWN.dir + LEFT.dir -> '╗'
+            DOWN.dir + RIGHT.dir -> '╔'
+            LEFT.dir+RIGHT.dir -> '═'
+            UP.dir+DOWN.dir -> '║'
+            UP.dir -> '╨'
+            RIGHT.dir -> '╞'
+            DOWN.dir -> '╥'
+            LEFT.dir -> '╡'
+            else -> '•'
+        }
+    }
 
-    //TODO: toString method
     //Reads array left to right, top to bottom
     //Only looks at SOUTH and EAST connections
     //Either connection exists or it does not, whitespace character for exists, some block-appearing char for not
