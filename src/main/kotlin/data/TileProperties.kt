@@ -20,13 +20,21 @@ value class TileProperties(val connections: Int) {
 
     //Remove a direction from the list of connections
     fun remove(dir: Directions): TileProperties {
-        return TileProperties(connections and(dir.inv()))
+        return this - dir
     }
 
     //Add a direction to the list of connections
     //Should only be accessed by the Tile class
     fun add(dir: Directions): TileProperties {
-        return TileProperties(connections or(dir.dir))
+        return this + dir
+    }
+
+    operator fun plus(dir: Directions): TileProperties {
+        return TileProperties(connections + dir.dir)
+    }
+
+    operator fun minus(dir: Directions): TileProperties {
+        return TileProperties(connections - dir.dir)
     }
 
     fun isWest(): Boolean {
@@ -45,19 +53,28 @@ value class TileProperties(val connections: Int) {
         return connections and(DOWN.dir) != 0
     }
 
-    infix fun and(dir: Directions): TileProperties {
-        return TileProperties(connections and(dir.dir))
+    override fun toString():String {
+        val ret = StringBuilder()
+        if(isWest()) {
+            ret.append("WEST")
+        }
+        if(isEast()) {
+            if(ret.isNotEmpty())
+                ret.append(", ")
+            ret.append("EAST")
+        }
+        if(isNorth()) {
+            if(ret.isNotEmpty())
+                ret.append(", ")
+            ret.append("NORTH")
+        }
+        if(isSouth()) {
+            if(ret.isNotEmpty())
+                ret.append(", ")
+            ret.append("SOUTH")
+        }
+
+        return ""
     }
 
-    infix fun and(dir: Int): TileProperties {
-        return TileProperties(connections and(dir))
-    }
-
-    infix fun or(dir: Directions): TileProperties {
-        return TileProperties(connections or(dir.dir))
-    }
-
-    infix fun or(dir: Int): TileProperties {
-        return TileProperties(connections or(dir))
-    }
 }
