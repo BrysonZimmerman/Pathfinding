@@ -26,6 +26,10 @@ object World {
        tiles.value[tile.x()][tile.y()] = to
     }
 
+    fun get(tile: Tile): TileProperties {
+        return tiles.value[tile.x()][tile.y()]
+    }
+
     //Returns a coordinate pair
     fun getRandomLocation(): Tile {
         return Tile((0..<sizeX).random(), (0..<sizeY).random())

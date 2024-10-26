@@ -2,7 +2,8 @@ package technology.zim.data
 
 import technology.zim.World
 
-
+//Tile is a ULong that represents the X,Y coordinates of a Tile
+//Contains functions necessary for accessing and manipulating Tiles
 
 @JvmInline
 value class Tile(private val value: ULong) {
@@ -24,8 +25,6 @@ value class Tile(private val value: ULong) {
         //Ensure that the tile is within bounds
         if(candidateTile.isInBounds() && this.isInBounds())
         {
-            if(this.y() == World.sizeY - 1 && dir == Directions.DOWN)
-                println("wat")
             World.update(this, getProperties().add(dir))
             World.update(candidateTile, candidateTile.getProperties().add(candidateTile.toward(this)))
         }
@@ -40,8 +39,9 @@ value class Tile(private val value: ULong) {
     }
 
     fun toward(otherTile: Tile): Directions {
-        return Directions.convertModifier(otherTile.value - this.value)
+        return Directions.convertModifier(Tile(otherTile.x() - this.x(), otherTile.y() - this.y()).value)
     }
+
     fun getAdjacentTiles(explored:Boolean): Set<Tile> {
         val adj = mutableSetOf<Tile>()
         val dirs = Directions.ALL
@@ -50,9 +50,9 @@ value class Tile(private val value: ULong) {
             val candidateTile = this + dir
 
             //Ensure that the tile is within bounds
-            if(candidateTile.isInBounds() && candidateTile.getProperties().visited() == explored)
+            if(candidateTile.isInBounds() && World.get(candidateTile).visited() == explored)
             {
-                println("$this+$dir --> $candidateTile")
+                //println("$this+$dir --> $candidateTile")
                 adj.add(candidateTile)
             }
         }
@@ -61,24 +61,17 @@ value class Tile(private val value: ULong) {
         return adj
     }
 
-
-
-    fun hasConnections(): Boolean {
-        return getProperties().connections != 0
-    }
-
-
     //Arguments could be made for either World or Tile knowing whether a Tile is in bounds
     fun isInBounds(): Boolean {
         return x() >= 0 &&
             y() >= 0 &&
-            x() < World.tiles.value.size  &&
-            y() < World.tiles.value.get(0).size
+            x() < World.sizeX  &&
+            y() < World.sizeY
     }
 
     //Get the properties of the tile at the given coordinates
     fun getProperties(): TileProperties {
-        return World.tiles.value.get(x()).get(y())
+        return World.get(this)
     }
 
     //Get tile at given direction
@@ -91,6 +84,8 @@ value class Tile(private val value: ULong) {
     }
 
 
+    //Debug function to print the coordinates of this Tile
+    @SuppressWarnings
     fun getCoordinates(): Pair<Int, Int> {
         return Pair(x(), y())
     }
