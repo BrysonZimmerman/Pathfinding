@@ -23,7 +23,7 @@ object MazeFinder {
     var startingTile = World.getRandomLocation()
     val randGen = XoRoShiRo128PlusRandom()
 
-    val tempInGraph = ArrayList<Pair<Tile, TileProperties>>()
+    val tempInGraph = ArrayList<Tile>()
 
     fun primsAlgorithm() {
         cleanUp()
@@ -36,6 +36,8 @@ object MazeFinder {
         startingTile = World.getRandomLocation()
         val tmpIndex = randGen.nextInt(Directions.ALL.size)
         startingTile.connect(Directions.ALL.get(tmpIndex))
+        tempInGraph.add(startingTile)
+        tempInGraph.add(startingTile + Directions.ALL.get(tmpIndex))
         //Choose an arbitrary vertex from G (the graph), and add it to some (initially empty) set V.
         frontier.addAll(startingTile.getAdjacentTiles(false))
         frontier.addAll((startingTile + Directions.ALL.get(tmpIndex)).getAdjacentTiles(false))
@@ -47,7 +49,6 @@ object MazeFinder {
             //Grab a random tile from the frontier, mark it as visited
             val random = randGen.nextInt(frontier.size())
             current = frontier.data.get(random)
-            current.getProperties().visited()
             frontier.removeAt(random)
 
 
@@ -55,13 +56,18 @@ object MazeFinder {
             adjacentExplored = current.getAdjacentTiles(true)
 
             if(adjacentExplored.isEmpty())
-                println("No explored adjacent tiles found")
+                println("")
 
+            if(adjacentExplored.isEmpty()) {
+                val world = World.tiles
+                println ("No explored adjacent tiles found")
+            }
             //Select a random tile from possibleTiles
             inGraph = adjacentExplored.elementAt(randGen.nextInt(adjacentExplored.size))
 
             //Connect the frontier tile to the graph
-            current.connect(Directions.convertModifier(current.value - inGraph.value))
+            current.connect(inGraph)
+            tempInGraph.add(current)
             //Add current's unexplored tiles to the frontier, if not already in frontier
             frontier.addAll(current.getAdjacentTiles(false))
 
@@ -72,7 +78,6 @@ object MazeFinder {
         }
         println("prim")
     }
-
 
     fun cleanUp() {
         //Clean up the frontier

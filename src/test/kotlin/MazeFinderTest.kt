@@ -15,7 +15,7 @@ class MazeFinderTest {
     }
 
     @Test
-    fun topRowConnectedSouth() {
+    fun topRowOutOfBoundsCheck() {
         var southExists = false
         World.tiles.value.forEach {
             col ->
@@ -26,7 +26,7 @@ class MazeFinderTest {
     }
 
     @Test
-    fun bottomRowConnectedSouth() {
+    fun bottomRowOutOfBoundsCheck() {
         var southNotExists = true
         World.tiles.value.forEach {
             col ->
