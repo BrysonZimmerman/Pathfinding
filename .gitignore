@@ -3,6 +3,11 @@
 **/build/
 !src/**/build/
 
+#Ignore IntelliJ IDEA files
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/shelf
+
 # Ignore Gradle GUI config
 gradle-app.setting
 
