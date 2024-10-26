@@ -19,7 +19,12 @@ class HierarchicalPathfinding {
             World.setSize(n, n)
             println("Start")
             val startTime = System.currentTimeMillis()
-            MazeFinder.primsAlgorithm()
+            try {
+                MazeFinder.primsAlgorithm()
+            } catch(e: Exception) {
+                println(World.toString())
+                println(e.message)
+            }
             val endTime = System.currentTimeMillis()
 
             println(World.toString())

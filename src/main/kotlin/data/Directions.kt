@@ -5,9 +5,15 @@ enum class Directions(val dir: Int) {
     UP(1),
     DOWN(2),
     LEFT(4),
-    RIGHT(8);
+    RIGHT(8),
+    INPATH(16), //Chosen by the pathfinder
+    CHECKED(32), //Checked by the pathfinder
+    MANIFEST(64), //Checked by MazeFinder
+    ;
 
     companion object {
+
+        //Todo: This breaks the connect() function when used
         fun opposite(dir: Directions): Directions {
             return when(dir) {
                 UP -> DOWN
@@ -48,4 +54,5 @@ enum class Directions(val dir: Int) {
     fun inv(): Int {
         return dir.inv()
     }
+
 }

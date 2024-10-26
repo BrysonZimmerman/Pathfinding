@@ -3,7 +3,6 @@ package technology.zim
 import it.unimi.dsi.util.XoRoShiRo128PlusRandom
 import technology.zim.data.Directions
 import technology.zim.data.Tile
-import technology.zim.util.TrimmableArrayList
 import kotlin.collections.ArrayList
 
 
@@ -18,60 +17,49 @@ import kotlin.collections.ArrayList
 //http://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm
 
 object MazeFinder {
-    val frontier = TrimmableArrayList<Tile>()
-    var startingTile = World.getRandomLocation()
+    val frontier = ArrayList<Tile>()
     val randGen = XoRoShiRo128PlusRandom()
 
-    val tempInGraph = ArrayList<Tile>()
+    fun <E> ArrayList<E>.swapRemove(index: Int) {
+        this[index] = this[this.lastIndex]
+        this.removeLast()
+    }
 
     fun primsAlgorithm() {
-        cleanUp()
-        //val randomGen = Random
-
-
 
 
         //Prime the graph with the first connection, which marks the first visited Tiles
-        startingTile = World.getRandomLocation()
+        val startingTile = World.getRandomLocation()
         val tmpIndex = randGen.nextInt(Directions.ALL.size)
         val connectorTile = startingTile + Directions.ALL[tmpIndex]
+
+        //Connect the first two tiles so they're recognized as in the graph
         startingTile.connect(connectorTile)
 
-        tempInGraph.add(startingTile)
-        tempInGraph.add(connectorTile)
-        //Choose an arbitrary vertex from G (the graph), and add it to some (initially empty) set V.
+        //Add their unexplored adjacent tiles to the frontier
         frontier.addAll(startingTile.getAdjacentTiles(false))
         frontier.addAll((connectorTile.getAdjacentTiles(false)))
-        //Choose a random edge from G, that connects a vertex in V with another vertex not in V.
+
         var current: Tile
         var inGraph: Tile
         var adjacentExplored: Set<Tile>
         while(frontier.isNotEmpty()) {
-            //Grab a random tile from the frontier, mark it as visited
-            val random = randGen.nextInt(frontier.size())
-            current = frontier.data.get(random)
-            frontier.removeAt(random)
-
+            //Grab a random tile from the frontier
+            val random = randGen.nextInt(frontier.size)
+            current = frontier.get(random)
+            frontier.swapRemove(random)
 
             //Find adjacent tiles that are in the graph
             adjacentExplored = current.getAdjacentTiles(true)
 
-            if(adjacentExplored.isEmpty())
-                println("")
-
-            if(adjacentExplored.isEmpty()) {
-                val world = World.tiles
-                println ("No explored adjacent tiles found")
-            }
-            //Select a random tile from possibleTiles
+            //Select a random explored tile
             inGraph = adjacentExplored.elementAt(randGen.nextInt(adjacentExplored.size))
 
-            //Connect the frontier tile to the graph
+            //Connect the frontier tile to the explored tile
             current.connect(inGraph)
-            tempInGraph.add(current)
-            //Add current's unexplored tiles to the frontier, if not already in frontier
-            frontier.addAll(current.getAdjacentTiles(false))
 
+            //Look around the frontier tile for unexplored tiles, add them to the frontier
+           manifestDestiny(current)
 
             //print(World.toString())
             //println("--------------------------------------------")
@@ -80,9 +68,15 @@ object MazeFinder {
         println("prim")
     }
 
-    fun cleanUp() {
-        //Clean up the frontier
-        frontier.clear()
+    private fun manifestDestiny(current: Tile) {
+        current.getAdjacentTiles(false).forEach {
+                tile ->
+            val tileprops = World.get(tile)
+            if(!tileprops.isManifested()) {
+                World.update(tile, tileprops + Directions.MANIFEST)
+                frontier.add(tile)
+            }
+        }
     }
     //Todo: Consider growing World with null values, then use Mazefinder to instantiate as the maze is developed
     //Consequence: World becomes nullable, requiring null checks to be added in order to avoid... issues

@@ -48,7 +48,6 @@ value class Tile(private val value: ULong) {
 
         dirs.forEach { dir ->
             val candidateTile = this + dir
-
             //Ensure that the tile is within bounds
             if(candidateTile.isInBounds() && World.get(candidateTile).visited() == explored)
             {

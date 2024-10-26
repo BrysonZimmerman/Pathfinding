@@ -15,7 +15,7 @@ import technology.zim.data.Directions.*
 value class TileProperties(val connections: Int) {
 
     fun visited(): Boolean {
-        return connections != 0
+        return connections and(UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir )!= 0
     }
 
     //Remove a direction from the list of connections
@@ -51,6 +51,10 @@ value class TileProperties(val connections: Int) {
 
     fun isSouth():Boolean {
         return connections and(DOWN.dir) == DOWN.dir
+    }
+
+    fun isManifested(): Boolean {
+        return connections and(MANIFEST.dir) == MANIFEST.dir
     }
 
     override fun toString():String {
