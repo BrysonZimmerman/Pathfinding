@@ -30,27 +30,27 @@ value class TileProperties(val connections: Int) {
     }
 
     operator fun plus(dir: Directions): TileProperties {
-        return TileProperties(connections + dir.dir)
+        return TileProperties(connections or(dir.dir))
     }
 
     operator fun minus(dir: Directions): TileProperties {
-        return TileProperties(connections - dir.dir)
+        return TileProperties(connections and dir.dir.inv())
     }
 
     fun isWest(): Boolean {
-        return connections and(LEFT.dir) != 0
+        return connections and(LEFT.dir) == LEFT.dir
     }
 
     fun isEast():Boolean {
-        return connections and(RIGHT.dir) != 0
+        return connections and(RIGHT.dir) == RIGHT.dir
     }
 
     fun isNorth(): Boolean {
-        return connections and(UP.dir) != 0
+        return connections and(UP.dir) == UP.dir
     }
 
     fun isSouth():Boolean {
-        return connections and(DOWN.dir) != 0
+        return connections and(DOWN.dir) == DOWN.dir
     }
 
     override fun toString():String {
@@ -73,8 +73,9 @@ value class TileProperties(val connections: Int) {
                 ret.append(", ")
             ret.append("SOUTH")
         }
+        ret.append(": $connections")
 
-        return ""
+        return ret.toString()
     }
 
 }
