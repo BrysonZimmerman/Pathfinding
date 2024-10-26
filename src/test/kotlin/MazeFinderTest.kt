@@ -42,7 +42,7 @@ class MazeFinderTest {
             col ->
             col.forEach {
                 tile ->
-                assert(tile.visited)
+                assert(tile.visited())
             }
         }
     }
@@ -54,9 +54,9 @@ class MazeFinderTest {
             col ->
             col.forEachIndexed { y,
                 tileprop ->
-                if(tileprop.connections.isEmpty())
+                if(!tileprop.visited())
                     println("Empty Connections at: " + Tile(x, y).toString())
-                assert(tileprop.connections.isNotEmpty())
+                assert(tileprop.visited())
             }
         }
     }
