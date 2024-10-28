@@ -19,14 +19,15 @@ value class TileProperties(val connections: Int) {
     }
 
     //Remove a direction from the list of connections
+    @SuppressWarnings
     fun remove(dir: Directions): TileProperties {
-        return this - dir
+        return TileProperties(connections and(dir.dir.inv()))
     }
 
     //Add a direction to the list of connections
     //Should only be accessed by the Tile class
     fun add(dir: Directions): TileProperties {
-        return this + dir
+        return TileProperties(this.connections or(dir.dir))
     }
 
     operator fun plus(dir: Directions): TileProperties {
