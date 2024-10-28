@@ -1,7 +1,6 @@
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.BeforeTest
 import org.junit.jupiter.api.Assertions.*
-import technology.zim.MazeFinder
 import technology.zim.World
 import technology.zim.data.*
 import technology.zim.data.Directions.*
@@ -30,10 +29,10 @@ class TileTest {
         val startTile = Tile(1, 1)
         var endTile = startTile
 
-        endTile = endTile + LEFT
-        endTile = endTile + UP
-        endTile = endTile + RIGHT
-        endTile = endTile + DOWN
+        endTile += LEFT
+        endTile += UP
+        endTile += RIGHT
+        endTile += DOWN
         assert(startTile == endTile)
     }
 
@@ -103,7 +102,6 @@ class TileTest {
         someTile.connect(northTile)
         someTile.connect(DOWN)
 
-        val world = World.tiles
         val adjacent = someTile.getAdjacentTiles(false)
         val explored = someTile.getAdjacentTiles(true)
         println("Connections of tiles in adjacent (should be westTile and eastTile)")

@@ -9,7 +9,6 @@ import kotlin.math.abs
 //and https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Comparator.html
 
 object PathFinder {
-    val path = ArrayDeque<Tile>()
 
     //work along the path, marking tiles with VISITED along the way
     //if marking with visited is too expensive, just make the path and finalize it
@@ -18,12 +17,21 @@ object PathFinder {
             throw IndexOutOfBoundsException("Cannot generate a path to or from an out of bounds tile")
         }
 
+        if(start == end) {
+            println("Ouroboros detected")
+            return
+        }
+
+        //Figure out what open and closed queues are for
 
 
 
 
 
 
+
+
+        //return a list of steps
     }
 
     //Heuristic value, to estimate the cost of a given tile

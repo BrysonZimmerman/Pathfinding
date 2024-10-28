@@ -8,7 +8,7 @@ enum class Directions(val dir: Int) {
     RIGHT(8),
     INPATH(16), //Chosen by the pathfinder
     CHECKED(32), //Checked by the pathfinder
-    MANIFEST(64), //Checked by MazeFinder
+    MANIFEST(64), //Checked by MazeFinder, the imperialist way
     ;
 
     companion object {
