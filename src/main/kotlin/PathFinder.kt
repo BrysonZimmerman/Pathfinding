@@ -22,13 +22,17 @@ object PathFinder {
             return
         }
 
-        //Data structure to define the frontier
-        //Frontier tiles know their current cost: cost of the path until now g(t) + its own distance from the end h(t)
-        //Always grab the lowest value from the frontier, mark it visited, add its unvisited neighbors
-        //Probably best to just make an array of integers, where the coordinates store the tile's g(t)
+        //Data structure to define the frontier, possibly a heap
+
+        //Frontier tiles know their current cost: g(n) (number of steps from start to this node)+ calculate own distance from the end h(n)
+        //Always grab the lowest value of f(n) = g(n) + h(n) from the frontier, mark it visited, add its unvisited neighbors
+        //Probably best to just make an array of integers, where the coordinates store the tile's g(n)
+
+        //Need to be able to return a tile to the frontier if a shorter path to it is found
+        //This seems like a thing that should not be possible. Manhattan heuristic
 
         //Data structure to hold the g values
-        //Data structure to mark parents
+        //Data structure to mark parents (tree? hashmap?)
         //Two choices that I see:
 
         //Dual arrays, one for g-val and one for parent node, take advantage of bitflags in Directions
