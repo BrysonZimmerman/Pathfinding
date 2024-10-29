@@ -22,9 +22,19 @@ object PathFinder {
             return
         }
 
-        //Figure out what open and closed queues are for
+        //Data structure to define the frontier
+        //Frontier tiles know their current cost: cost of the path until now g(t) + its own distance from the end h(t)
+        //Always grab the lowest value from the frontier, mark it visited, add its unvisited neighbors
+        //Probably best to just make an array of integers, where the coordinates store the tile's g(t)
 
+        //Data structure to hold the g values
+        //Data structure to mark parents
+        //Two choices that I see:
 
+        //Dual arrays, one for g-val and one for parent node, take advantage of bitflags in Directions
+
+        //or add a flag for DEADEND, use a more dynamic data structure to store tile data (map?)
+        //then prune tiles from the data structure when they're marked as dead ends, backtracking until a fork is available
 
 
 

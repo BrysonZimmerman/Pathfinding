@@ -6,9 +6,10 @@ enum class Directions(val dir: Int) {
     DOWN(2),
     LEFT(4),
     RIGHT(8),
-    INPATH(16), //Chosen by the pathfinder
-    CHECKED(32), //Checked by the pathfinder
-    MANIFEST(64), //Checked by MazeFinder, the imperialist way
+    MANIFEST(16),//Checked by MazeFinder, the imperialist way
+    MARKED(32), //Marked as an item to check, from pathfinder
+    CHECKED(64), //Checked by the pathfinder
+    INPATH(128), //Chosen by the pathfinder
     ;
 
     companion object {
