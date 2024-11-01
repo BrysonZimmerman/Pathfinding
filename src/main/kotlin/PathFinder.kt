@@ -33,10 +33,15 @@ object PathFinder {
 
         //Data structure to hold the g values
         //Data structure to mark parents (tree? hashmap?)
-        //Two choices that I see:
+        //Three choices that I see:
+
+        //Don't track parents, track g-values only by mapping them out from the parent to the children as soon as the parent is reached
+        //Parent can be identified by looking for lowest g(x) on neighboring tiles (barring alternate paths? maybe works either way in a perfect maze?)
+        //Might not matter because equal g(x) means that the path back is an equal number of steps either way, so pick one.
 
         //Dual arrays, one for g-val and one for parent node, take advantage of bitflags in Directions
 
+        //Useless for a maze because we'll only go to a deadend once
         //or add a flag for DEADEND, use a more dynamic data structure to store tile data (map?)
         //then prune tiles from the data structure when they're marked as dead ends, backtracking until a fork is available
 
