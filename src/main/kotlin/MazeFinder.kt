@@ -26,8 +26,6 @@ object MazeFinder {
     }
 
     fun primsAlgorithm() {
-
-
         //Prime the graph with the first connection, which marks the first visited Tiles
         val startingTile = World.getRandomLocation()
         val tmpIndex = randGen.nextInt(Directions.ALL.size)
@@ -72,7 +70,7 @@ object MazeFinder {
         current.getAdjacentTiles(false).forEach {
                 tile ->
             val tileprops = World.get(tile)
-            if(!tileprops.isManifested()) {
+            if(!tileprops.isManifest()) {
                 World.update(tile, tileprops + Directions.MANIFEST)
                 frontier.add(tile)
             }
