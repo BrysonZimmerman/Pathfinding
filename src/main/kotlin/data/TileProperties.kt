@@ -54,7 +54,7 @@ value class TileProperties(val connections: Int) {
         return connections and(DOWN.dir) == DOWN.dir
     }
 
-    fun isManifested(): Boolean {
+    fun isManifest(): Boolean {
         return connections and(MANIFEST.dir) == MANIFEST.dir
     }
 
