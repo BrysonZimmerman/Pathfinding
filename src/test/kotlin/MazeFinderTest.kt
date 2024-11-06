@@ -1,8 +1,9 @@
 import kotlin.test.Test
+import kotlin.test.BeforeTest
 import technology.zim.MazeFinder
 import technology.zim.World
 import technology.zim.data.Tile
-import kotlin.test.BeforeTest
+
 
 class MazeFinderTest {
 
