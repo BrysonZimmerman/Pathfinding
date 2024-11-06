@@ -1,6 +1,7 @@
 package technology.zim.data
 
 import technology.zim.World
+import java.util.HashMap
 
 //Tile is a ULong that represents the X,Y coordinates of a Tile
 //Contains functions necessary for accessing and manipulating Tiles
@@ -111,6 +112,23 @@ value class Tile(private val value: ULong) {
 
     override fun toString():String {
         return "<" + x() + ", " + y() + ">"
+    }
+
+    //TODO: Consider pushing getAdjacent and getUnexplored to their call locations to avoid allocating sets?
+    fun getUnexploredTiles(map: HashMap<Tile, Int>):Set<Tile> {
+        val adj = mutableSetOf<Tile>()
+        val dirs = Directions.ALL
+
+        dirs.forEach { dir ->
+            val candidateTile = this + dir
+            //Ensure that the tile is within bounds
+            if(candidateTile.isInBounds() && !map.containsKey(candidateTile))
+            {
+                //println("$this+$dir --> $candidateTile")
+                adj.add(candidateTile)
+            }
+        }
+        return adj
     }
 
     companion object {

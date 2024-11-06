@@ -1,6 +1,7 @@
 package technology.zim
 
 import technology.zim.data.Tile
+import technology.zim.data.TileHeap
 import kotlin.math.abs
 
 //A* to be upgraded with hierarchies
@@ -9,7 +10,7 @@ import kotlin.math.abs
 //and https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Comparator.html
 
 object PathFinder {
-
+    val hVals = HashMap<Tile, Int>()
     //work along the path, marking tiles with VISITED along the way
     //if marking with visited is too expensive, just make the path and finalize it
     fun generatePath(start: Tile, end: Tile) {
@@ -22,12 +23,23 @@ object PathFinder {
             return
         }
 
-        //Frontier defined by a Tile heap that makes comparisons on calculated hValues
+        val frontier = TileHeap(end)
 
-        //Frontier tiles are known to have a current cost: g(n) (number of steps from start to this node)+ calculate own distance from the end h(n)
-        //Probably best to just make an array of integers, where the coordinates store the tile's g(n)
+        //Prime the things
+        hVals.put(start, hValue(start, end))
+        frontier.insert(start)
 
-        //Always grab the lowest value of f(n) = g(n) + h(n) from the frontier, mark it visited, mark its g(n), and add its unvisited neighbors
+        var current: Tile
+        //TODO: update TileHeap to utilize full f(n) instead of just h(n)
+        do {
+            current = frontier.popMin()
+            //TODO: Can't delegate getUnexploredTiles to Tile as this prevents adding tiles back to the frontier when a better path found
+            current.getUnexploredTiles(hVals).forEach {
+                value ->
+                frontier.insert(value)
+                hVals.put(value, hVals.get(current)?.plus(1) ?: 0.also { throw IllegalStateException("Couldn't get hValue of current tile")})
+            }
+        } while( current != end)
 
         //Need to be able to return a tile to the frontier if a shorter path to it is found
 
