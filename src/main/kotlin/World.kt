@@ -45,12 +45,7 @@ object World {
     //TODO: https://en.wikipedia.org/wiki/Box-drawing_characters
     //^ make the maze look like a maze
     override fun toString(): String {
-        val em = ' ' //Empty character
-        val fi = '█' //Filled character
-        val dot = '•'
-
-        val str = StringBuilder()
-
+         val str = StringBuilder()
 
         //Reading left to right, top to bottom - can do a simple for each on the rows
         for (y in 0..tiles.value[0].size - 1) {
@@ -63,6 +58,7 @@ object World {
         str.appendLine()
         return str.toString()
     }
+
     fun getTileShape(tile: TileProperties): Char {
         return when(tile.connections) {
             UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir -> '╋'

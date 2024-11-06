@@ -1,6 +1,5 @@
 package technology.zim.data
 
-import technology.zim.World
 import kotlin.math.abs
 
 //Translated code from CS222 MaxHeap homework
@@ -31,7 +30,7 @@ class TileHeap(val end: Tile) {
         siftUp(dat.size - 1)
     }
 
-    private fun siftUp(index: kotlin.Int)  {
+    private fun siftUp(index: Int)  {
         if(dat.isEmpty())
             throw ArrayIndexOutOfBoundsException()
 
@@ -78,11 +77,11 @@ class TileHeap(val end: Tile) {
     }
 
     //Helper functions for navigating the heap
-    private fun parent(index: kotlin.Int): kotlin.Int = index / 2
-    private fun leftChild(index: kotlin.Int): kotlin.Int = index * 2
-    private fun rightChild(index: kotlin.Int): kotlin.Int = (index * 2) + 1
+    private fun parent(index: Int): Int = index / 2
+    private fun leftChild(index: Int): Int = index * 2
+    private fun rightChild(index: Int): Int = (index * 2) + 1
 
-    private fun swap(index1: kotlin.Int, index2: kotlin.Int) {
+    private fun swap(index1: Int, index2: Int) {
         val index1tmp = dat[index1]
         dat[index1] = dat[index2]
         dat[index2] = index1tmp
