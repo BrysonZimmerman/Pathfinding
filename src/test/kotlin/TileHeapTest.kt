@@ -1,14 +1,16 @@
-import technology.zim.data.MinHeap
+import technology.zim.data.TileHeap
 import kotlin.test.Test
 import kotlin.test.BeforeTest
 
-class MinHeapTest {
+//TODO: update to use Tile adjustment to heap
+
+class TileHeapTest {
     companion object {
-        var heap = MinHeap()
+        var heap = TileHeap()
     }
     @BeforeTest
     fun setUp() {
-        heap = MinHeap()
+        heap = TileHeap()
         arrayOf(10, 20, 15, 17, 9, 21).forEach { item ->
             heap.insert(item)
         }
@@ -17,8 +19,10 @@ class MinHeapTest {
     @Test
     fun sortTest() {
         arrayOf(9, 10, 15, 17, 20, 21 ).forEach { item ->
-            println(item)
-            assert(heap.popMin() == item)
+            val popped = heap.popMin()
+            println("$item: Got $popped")
+
+            assert(popped == item)
         }
     }
 }

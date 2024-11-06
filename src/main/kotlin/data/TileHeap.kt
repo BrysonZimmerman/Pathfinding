@@ -1,27 +1,30 @@
 package technology.zim.data
 
+import kotlin.math.abs
+
 //Translated code from CS222 MaxHeap homework
 //Cannot use index 0 due to Integer limitations
-class MinHeap() {
-   val dat = ArrayList<Int>(2)
-
+class TileHeap(val end: Tile) {
+   val dat = ArrayList<Tile>()
     init {
-        dat.add(Int.MIN_VALUE)
+        //Shove some data into the zero slot
+        if(dat.isEmpty())
+            dat.add(Tile(0, 0))
     }
 
-    fun popMin(): Int {
+    fun popMin(): Tile {
         if(dat.isEmpty()) {
             throw ArrayIndexOutOfBoundsException()
         }
 
-        val ret = dat.first()
+        val ret = dat[1]
         dat[1] = dat[dat.size - 1]
         siftDown(1)
 
         return ret
     }
 
-    fun insert(value: Int) {
+    fun insert(value: Tile) {
         dat.add(value)
         siftUp(dat.size - 1)
     }
@@ -30,7 +33,7 @@ class MinHeap() {
         if(dat.isEmpty())
             throw ArrayIndexOutOfBoundsException()
 
-        if(dat[index] < dat[parent(index)] && index > 1) {
+        if(hValue(dat[index]) < hValue(dat[parent(index)]) && index > 1) {
             swap(index, parent(index))
             siftUp(parent(index))
         }
@@ -38,26 +41,26 @@ class MinHeap() {
 
     private fun siftDown(index: Int) {
         if(!isLeaf(index)) {
-            var maxIndex = index
+            var minValueIndex = index
 
             val l = leftChild(index)
-            if(dat[l] < dat[index] && leftChild(index) <= dat.size) {
-                maxIndex = l
+            if(l < dat.size && hValue(dat[l]) < hValue(dat[minValueIndex]) ) {
+                minValueIndex = l
             }
 
             val r = rightChild(index)
-            if(dat[r] < dat[index] && rightChild(index) <= dat.size) {
-                maxIndex = r
+            if(r < dat.size && hValue(dat[r]) < hValue(dat[minValueIndex])) {
+                minValueIndex = r
             }
 
-            if(maxIndex != index) {
-                swap(index, maxIndex)
-                siftDown(maxIndex)
+            if(minValueIndex != index) {
+                swap(index, minValueIndex)
+                siftDown(minValueIndex)
             }
         }
     }
 
-    fun peekMax(): Int {
+    fun peekMax(): Tile {
         if(dat.isEmpty()) {
             throw ArrayIndexOutOfBoundsException()
         }
@@ -65,7 +68,7 @@ class MinHeap() {
         return dat.last()
     }
 
-    fun peekMin(): Int {
+    fun peekMin(): Tile {
         if(dat.isEmpty()) {
             throw ArrayIndexOutOfBoundsException()
         }
@@ -75,7 +78,7 @@ class MinHeap() {
     //Helper functions for navigating the heap
     private fun parent(index: kotlin.Int): kotlin.Int = index / 2
     private fun leftChild(index: kotlin.Int): kotlin.Int = index * 2
-    private fun rightChild(index: kotlin.Int): kotlin.Int = (index * 2) - 1
+    private fun rightChild(index: kotlin.Int): kotlin.Int = (index * 2) + 1
 
     private fun swap(index1: kotlin.Int, index2: kotlin.Int) {
         val index1tmp = dat[index1]
@@ -85,6 +88,10 @@ class MinHeap() {
 
     private fun isLeaf(index: Int): Boolean {
         return index > (dat.size / 2)
+    }
+
+    private fun hValue(prospect: Tile): Int {
+        return abs(prospect.x() - end.x()) + abs(prospect.y() - end.y())
     }
 
 }
