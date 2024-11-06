@@ -1,5 +1,6 @@
 package technology.zim.data
 
+import technology.zim.World
 import kotlin.math.abs
 
 //Translated code from CS222 MaxHeap homework
@@ -13,12 +14,13 @@ class TileHeap(val end: Tile) {
     }
 
     fun popMin(): Tile {
-        if(dat.isEmpty()) {
+            if(dat.isEmpty()) {
             throw ArrayIndexOutOfBoundsException()
         }
 
         val ret = dat[1]
         dat[1] = dat[dat.size - 1]
+        dat.removeLast()
         siftDown(1)
 
         return ret

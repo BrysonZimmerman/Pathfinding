@@ -1,3 +1,4 @@
+import technology.zim.data.Tile
 import technology.zim.data.TileHeap
 import kotlin.test.Test
 import kotlin.test.BeforeTest
@@ -6,19 +7,19 @@ import kotlin.test.BeforeTest
 
 class TileHeapTest {
     companion object {
-        var heap = TileHeap()
+        var heap = TileHeap(Tile(20, 20))
     }
     @BeforeTest
     fun setUp() {
-        heap = TileHeap()
-        arrayOf(10, 20, 15, 17, 9, 21).forEach { item ->
+        heap = TileHeap(Tile(20, 20))
+        arrayOf(Tile(0, 0), Tile(1, 1), Tile(5, 5), Tile(4, 4), Tile(19, 19), Tile(2, 2)).forEach { item ->
             heap.insert(item)
         }
     }
 
     @Test
     fun sortTest() {
-        arrayOf(9, 10, 15, 17, 20, 21 ).forEach { item ->
+        arrayOf(Tile(19, 19), Tile(5, 5), Tile(4, 4), Tile(2, 2), Tile(1, 1), Tile(0, 0) ).forEach { item ->
             val popped = heap.popMin()
             println("$item: Got $popped")
 
