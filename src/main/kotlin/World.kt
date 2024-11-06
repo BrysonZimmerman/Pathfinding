@@ -84,7 +84,7 @@ object World {
         }
     }
     fun getTileShapeDoubles(tile: TileProperties): Char {
-        return when(tile.connections and(MANIFEST.inv()) and(INPATH.inv()) and(CHECKED.inv())) {
+        return when(tile.connections and(MANIFEST.inv()) and(INPATH.inv()) and(FRONTIERIFIED.inv())) {
             UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir -> '╬'
             UP.dir+DOWN.dir+LEFT.dir -> '╣'
             UP.dir+DOWN.dir+RIGHT.dir -> '╠'
