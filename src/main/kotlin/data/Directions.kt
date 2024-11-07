@@ -7,9 +7,8 @@ enum class Directions(val dir: Int) {
     LEFT(4),
     RIGHT(8),
     MANIFEST(16),//Checked by MazeFinder, the imperialist way
-    MARKED(32), //Marked as an item to check, from pathfinder
-    FRONTIERIFIED(64), //Added to the pathfinder's frontier
-    INPATH(128), //Chosen by the pathfinder
+    FRONTIERIFIED(32), //Added to the pathfinder's frontier
+    INPATH(64), //Chosen by the pathfinder
     ;
 
     companion object {
