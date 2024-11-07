@@ -1,5 +1,6 @@
 package technology.zim
 
+import technology.zim.data.Tile
 import kotlin.times
 import kotlin.toString
 
@@ -12,33 +13,43 @@ Minimum int size is probably 32 or 64 bit, so huge memory waste if that's used
 Abandon fancy stretch goals, just get pathfinding done and scale it up to demonstrate large scale
  */
 
+
+//TODO: Figure out why attempted connections out of bounds are happening
+/*
+Building world
+Start
+Attempted to connect to outside bounds: <44, 50> From Tile: <44, 49>
+no explored found
+ */
 class HierarchicalPathfinding {
 
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-
-            buildMaze()
-
-
+            val n = 50
+            buildMaze(n)
+            val startTime = System.currentTimeMillis()
+            PathFinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
+            val endTime = System.currentTimeMillis()
+            println(World.toString())
+            println(n*n)
+            println((endTime - startTime).toString() + "ms")
         }
 
-        fun buildMaze() {
-            val n = 1000
+        fun buildMaze(n: Int) {
+
             println("Building world")
             World.setSize(n, n)
             println("Start")
-            val startTime = System.currentTimeMillis()
+
             try {
                 MazeFinder.primsAlgorithm()
             } catch(e: Exception) {
                 println(World.toString())
                 println(e.message)
             }
-            val endTime = System.currentTimeMillis()
-            println(World.toString())
-            println(n*n)
-            println((endTime - startTime).toString() + "ms")
+
+
         }
     }
 
