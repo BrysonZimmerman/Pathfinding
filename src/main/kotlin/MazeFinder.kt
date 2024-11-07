@@ -1,6 +1,7 @@
 package technology.zim
 
 import it.unimi.dsi.util.XoRoShiRo128PlusRandom
+import it.unimi.dsi.util.XoShiRo256PlusRandom
 import technology.zim.data.Directions
 import technology.zim.data.Tile
 import kotlin.collections.ArrayList
@@ -18,7 +19,7 @@ import kotlin.collections.ArrayList
 
 object MazeFinder {
     val frontier = ArrayList<Tile>()
-    val randGen = XoRoShiRo128PlusRandom()
+    val randGen = XoShiRo256PlusRandom()
 
     fun <E> ArrayList<E>.swapRemove(index: Int) {
         this[index] = this[this.lastIndex]
@@ -28,8 +29,7 @@ object MazeFinder {
     fun primsAlgorithm() {
         //Prime the graph with the first connection, which marks the first visited Tiles
         val startingTile = World.getRandomLocation()
-        val tmpIndex = randGen.nextInt(Directions.ALL.size)
-        val connectorTile = startingTile + Directions.ALL[tmpIndex]
+        val connectorTile = startingTile.getAdjacentTiles(false).random()
 
         //Connect the first two tiles so they're recognized as in the graph
         startingTile.connect(connectorTile)
@@ -57,7 +57,7 @@ object MazeFinder {
             current.connect(inGraph)
 
             //Look around the frontier tile for unexplored tiles, add them to the frontier
-           manifestDestiny(current)
+            manifestDestiny(current)
 
             //print(World.toString())
             //println("--------------------------------------------")
