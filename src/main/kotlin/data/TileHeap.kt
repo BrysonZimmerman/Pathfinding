@@ -63,21 +63,6 @@ class TileHeap(val end: Tile, val gVals: HashMap<Tile, Int>) {
         }
     }
 
-    fun peekMax(): Tile {
-        if(dat.isEmpty()) {
-            throw ArrayIndexOutOfBoundsException()
-        }
-
-        return dat.last()
-    }
-
-    fun peekMin(): Tile {
-        if(dat.isEmpty()) {
-            throw ArrayIndexOutOfBoundsException()
-        }
-        return dat[1]
-    }
-
     //Helper functions for navigating the heap
     private fun parent(index: Int): Int = index / 2
     private fun leftChild(index: Int): Int = index * 2

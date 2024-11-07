@@ -1,7 +1,6 @@
 package technology.zim.data
 
 import technology.zim.World
-import java.util.HashMap
 
 //Tile is a ULong that represents the X,Y coordinates of a Tile
 //Contains functions necessary for accessing and manipulating Tiles
@@ -117,7 +116,6 @@ value class Tile(private val value: ULong) {
     fun getConnections(): Set<Tile> {
         val connections = mutableSetOf<Tile>()
         val properties = getProperties()
-        val north = Directions.UP.dir
         if(properties.connections and(Directions.UP.dir) != 0) {
             connections.add(this + Directions.NORTH)
         }

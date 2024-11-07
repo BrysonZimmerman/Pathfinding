@@ -82,17 +82,4 @@ object PathFinder {
         World.update(start, start.getProperties() + Directions.INPATH)
 
     }
-
-    //Heuristic value, to estimate the cost of a given tile
-    fun hValue(prospect: Tile, end: Tile): Int {
-        return abs(prospect.x() - end.x()) + abs(prospect.y() - end.y())
-    }
-
-
-    //Step through the path, marking each Tile with INPATH
-    fun finalizePath() {
-
-    }
-
-
 }
