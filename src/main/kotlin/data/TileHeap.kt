@@ -1,10 +1,12 @@
 package technology.zim.data
 
+import java.util.HashMap
 import kotlin.math.abs
 
 //Translated code from CS222 MaxHeap homework
 //Cannot use index 0 due to Integer limitations
-class TileHeap(val end: Tile) {
+//TODO: Consider better options than passing in the information this thing needs
+class TileHeap(val end: Tile, val gVals: HashMap<Tile, Int>) {
    val dat = ArrayList<Tile>()
     init {
         //Shove some data into the zero slot
@@ -13,7 +15,7 @@ class TileHeap(val end: Tile) {
     }
 
     fun popMin(): Tile {
-            if(dat.isEmpty()) {
+        if(dat.size < 2) {
             throw ArrayIndexOutOfBoundsException()
         }
 
@@ -34,7 +36,7 @@ class TileHeap(val end: Tile) {
         if(dat.isEmpty())
             throw ArrayIndexOutOfBoundsException()
 
-        if(hValue(dat[index]) < hValue(dat[parent(index)]) && index > 1) {
+        if(fValue(dat[index]) < fValue(dat[parent(index)]) && index > 1) {
             swap(index, parent(index))
             siftUp(parent(index))
         }
@@ -45,12 +47,12 @@ class TileHeap(val end: Tile) {
             var minValueIndex = index
 
             val l = leftChild(index)
-            if(l < dat.size && hValue(dat[l]) < hValue(dat[minValueIndex]) ) {
+            if(l < dat.size && fValue(dat[l]) < fValue(dat[minValueIndex]) ) {
                 minValueIndex = l
             }
 
             val r = rightChild(index)
-            if(r < dat.size && hValue(dat[r]) < hValue(dat[minValueIndex])) {
+            if(r < dat.size && fValue(dat[r]) < fValue(dat[minValueIndex])) {
                 minValueIndex = r
             }
 
@@ -89,6 +91,10 @@ class TileHeap(val end: Tile) {
 
     private fun isLeaf(index: Int): Boolean {
         return index > (dat.size / 2)
+    }
+
+    private fun fValue(prospect: Tile): Int {
+        return hValue(prospect).plus(gVals.get(prospect) ?: 0)
     }
 
     private fun hValue(prospect: Tile): Int {
