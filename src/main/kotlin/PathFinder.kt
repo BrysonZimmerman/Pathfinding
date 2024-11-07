@@ -1,5 +1,6 @@
 package technology.zim
 
+import technology.zim.data.Directions
 import technology.zim.data.Tile
 import technology.zim.data.TileHeap
 import kotlin.math.abs
@@ -10,7 +11,7 @@ import kotlin.math.abs
 //and https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Comparator.html
 
 object PathFinder {
-    val hVals = HashMap<Tile, Int>()
+    val gVals = HashMap<Tile, Int>()
     //work along the path, marking tiles with VISITED along the way
     //if marking with visited is too expensive, just make the path and finalize it
     fun generatePath(start: Tile, end: Tile) {
@@ -23,30 +24,63 @@ object PathFinder {
             return
         }
 
-        val frontier = TileHeap(end)
+        val frontier = TileHeap(end, gVals)
 
         //Prime the things
-        hVals.put(start, hValue(start, end))
+        gVals.put(start, 0)
         frontier.insert(start)
 
         var current: Tile
-        //TODO: update TileHeap to utilize full f(n) instead of just h(n)
+        var currentG: Int
+
         do {
             current = frontier.popMin()
-            //TODO: Can't delegate getUnexploredTiles to Tile as this prevents adding tiles back to the frontier when a better path found
-            current.getUnexploredTiles(hVals).forEach {
-                value ->
-                frontier.insert(value)
-                hVals.put(value, hVals.get(current)?.plus(1) ?: 0.also { throw IllegalStateException("Couldn't get hValue of current tile")})
+            currentG = gVals.get(current) ?: 0.also { println("Failed to get gVal that must exist")}
+
+
+            current.getConnections().forEach { candidateTile ->
+                val candidateG = gVals.get(candidateTile)?:-1
+                //Ensure that the tile is within bounds
+                if(candidateTile.isInBounds())
+                {
+                    if(candidateG != -1) {
+                        //Then the candidateG already has a path leading to it, so check if the current path is better
+                        if(currentG + 1 < candidateG) {
+                            gVals.replace(candidateTile, candidateG)
+                            frontier.insert(candidateTile)
+
+                        }
+
+                    } else {
+                        //Otherwise, the tile has been reached and this path is not better, so carry on
+                        gVals.put(candidateTile, currentG + 1)
+                        frontier.insert(candidateTile)
+                        World.update(candidateTile, candidateTile.getProperties() +Directions.FRONTIERIFIED)
+                    }
+                }
             }
         } while( current != end)
 
-        //Need to be able to return a tile to the frontier if a shorter path to it is found
+        //At this point, a path is found
+        println("Path found!")
 
-        //Data structure to hold the g values
-        //Parent is chosen by the lowest g(n) value
+        //Step through the path from end until start
+        current = end
+        var lowestG = Int.MAX_VALUE
+        var lowestCost = end
+        while(current != start) {
+            World.update(current, current.getProperties() + Directions.INPATH)
+            current.getConnections().forEach { candidateTile ->
+                val candidateG = gVals.get(candidateTile) ?: -1
+                if(candidateTile.isInBounds() && candidateG != -1 && candidateG < lowestG ) {
+                    lowestG = candidateG
+                    lowestCost = candidateTile
+                }
+            }
+            current = lowestCost
+        }
+        World.update(start, start.getProperties() + Directions.INPATH)
 
-        //return a list of steps by starting at the exit, looking at the lowest g(n) neighbor
     }
 
     //Heuristic value, to estimate the cost of a given tile
