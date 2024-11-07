@@ -114,21 +114,21 @@ value class Tile(private val value: ULong) {
         return "<" + x() + ", " + y() + ">"
     }
 
-    //TODO: Consider pushing getAdjacent and getUnexplored to their call locations to avoid allocating sets?
-    fun getUnexploredTiles(map: HashMap<Tile, Int>):Set<Tile> {
-        val adj = mutableSetOf<Tile>()
-        val dirs = Directions.ALL
-
-        dirs.forEach { dir ->
-            val candidateTile = this + dir
-            //Ensure that the tile is within bounds
-            if(candidateTile.isInBounds() && !map.containsKey(candidateTile))
-            {
-                //println("$this+$dir --> $candidateTile")
-                adj.add(candidateTile)
-            }
+    fun getConnections(): Set<Tile> {
+        val connections = mutableSetOf<Tile>()
+        val properties = getProperties()
+        val north = Directions.UP.dir
+        if(properties.connections and(Directions.UP.dir) != 0) {
+            connections.add(this + Directions.NORTH)
         }
-        return adj
+        if(properties.connections and(Directions.LEFT.dir) != 0)
+            connections.add(this + Directions.WEST)
+        if(properties.connections and(Directions.RIGHT.dir) != 0)
+            connections.add(this + Directions.EAST)
+        if(properties.connections and(Directions.DOWN.dir) != 0)
+            connections.add(this + Directions.SOUTH)
+
+        return connections
     }
 
     companion object {
