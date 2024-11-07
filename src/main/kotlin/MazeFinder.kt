@@ -1,6 +1,5 @@
 package technology.zim
 
-import it.unimi.dsi.util.XoRoShiRo128PlusRandom
 import it.unimi.dsi.util.XoShiRo256PlusRandom
 import technology.zim.data.Directions
 import technology.zim.data.Tile

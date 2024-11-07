@@ -3,7 +3,6 @@ package technology.zim
 import technology.zim.data.Directions
 import technology.zim.data.Tile
 import technology.zim.data.TileHeap
-import kotlin.math.abs
 
 //A* to be upgraded with hierarchies
 

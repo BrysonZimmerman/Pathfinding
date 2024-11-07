@@ -1,4 +1,3 @@
-import technology.zim.data.Directions
 import technology.zim.data.Directions.*
 import technology.zim.data.TileProperties
 import kotlin.test.Test
