@@ -45,13 +45,36 @@ object World {
     //TODO: https://en.wikipedia.org/wiki/Box-drawing_characters
     //^ make the maze look like a maze
     override fun toString(): String {
-         val str = StringBuilder()
+        val ANSI_RESET = "\u001B[0m";
+        val ANSI_BLACK = "\u001B[30m";
+        val ANSI_RED = "\u001B[31m";
+        val ANSI_GREEN = "\u001B[32m";
+        val ANSI_YELLOW = "\u001B[33m";
+        val ANSI_BLUE = "\u001B[34m";
+        val ANSI_PURPLE = "\u001B[35m";
+        val ANSI_CYAN = "\u001B[36m";
+        val ANSI_WHITE = "\u001B[37m";
 
+        val str = StringBuilder()
+        var inPath = false
+        var checked = false
         //Reading left to right, top to bottom - can do a simple for each on the rows
         for (y in 0..tiles.value[0].size - 1) {
             //Upper line: Print each tile, print right-hand connections
             for (x in 0..tiles.value[0].size - 1) {
+                if(World.get(Tile(x, y)).connections and(INPATH.dir) != 0)
+                    inPath = true
+                else if (World.get(Tile(x, y)).connections and(FRONTIERIFIED.dir) != 0)
+                    checked = true
+                if(inPath)
+                    str.append(ANSI_GREEN)
+                else if(checked)
+                    str.append(ANSI_YELLOW)
                 str.append(getTileShapeDoubles(World.get(Tile(x, y))))
+                if(inPath || checked)
+                    str.append(ANSI_RESET)
+                inPath = false
+                checked = false
             }
             str.appendLine()
         }
