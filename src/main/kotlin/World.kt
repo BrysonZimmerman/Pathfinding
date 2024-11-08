@@ -64,7 +64,7 @@ object World {
             for (x in 0..tiles.value[0].size - 1) {
                 if(World.get(Tile(x, y)).connections and(INPATH.dir) != 0)
                     inPath = true
-                else if (World.get(Tile(x, y)).connections and(FRONTIERIFIED.dir) != 0)
+                else if (World.get(Tile(x, y)).connections and(FRONTIER.dir) != 0)
                     checked = true
                 if(inPath)
                     str.append(ANSI_GREEN)
@@ -103,7 +103,7 @@ object World {
         }
     }
     fun getTileShapeDoubles(tile: TileProperties): Char {
-        return when(tile.connections and(MANIFEST.inv()) and(INPATH.inv()) and(FRONTIERIFIED.inv())) {
+        return when(tile.connections and(MANIFEST.inv()) and(INPATH.inv()) and(FRONTIER.inv())) {
             UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir -> '╬'
             UP.dir+DOWN.dir+LEFT.dir -> '╣'
             UP.dir+DOWN.dir+RIGHT.dir -> '╠'

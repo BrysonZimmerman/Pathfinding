@@ -54,7 +54,7 @@ object PathFinder {
                         //Otherwise, the tile has been reached and this path is not better, so carry on
                         gVals.put(candidateTile, currentG + 1)
                         frontier.insert(candidateTile)
-                        World.update(candidateTile, candidateTile.getProperties() +Directions.FRONTIERIFIED)
+                        World.update(candidateTile, candidateTile.getProperties() +Directions.FRONTIER)
                     }
                 }
             }

@@ -7,7 +7,7 @@ class HierarchicalPathfinding {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val n = 50
+            val n = 500
             buildMaze(n)
             val startTime = System.currentTimeMillis()
             PathFinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))

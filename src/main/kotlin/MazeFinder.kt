@@ -56,7 +56,7 @@ object MazeFinder {
             current.connect(inGraph)
 
             //Look around the frontier tile for unexplored tiles, add them to the frontier
-            manifestDestiny(current)
+            addToManifest(current)
 
             //print(World.toString())
             //println("--------------------------------------------")
@@ -65,7 +65,7 @@ object MazeFinder {
         println("prim")
     }
 
-    private fun manifestDestiny(current: Tile) {
+    private fun addToManifest(current: Tile) {
         current.getAdjacentTiles(false).forEach {
                 tile ->
             val tileprops = World.get(tile)
