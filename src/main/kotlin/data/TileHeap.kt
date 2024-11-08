@@ -10,7 +10,7 @@ class TileHeap(val end: Tile, val gVals: HashMap<Tile, Int>) {
    val dat = ArrayList<Tile>()
     init {
         //Shove some data into the zero slot
-        if(dat.isEmpty())
+        if(dat.isEmpty)
             dat.add(Tile(0, 0))
     }
 

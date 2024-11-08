@@ -8,9 +8,7 @@ import technology.zim.World
 @JvmInline
 value class Tile(private val value: ULong) {
 
-    constructor(x: Int, y: Int): this(pack(x, y)) {
-
-    }
+    constructor(x: Int, y: Int): this(pack(x, y))
 
     fun connect(candidateTile: Tile) {
         val dir = toward(candidateTile)

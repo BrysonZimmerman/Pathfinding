@@ -9,7 +9,7 @@ value class WorldData(val value: ArrayList<ArrayList<TileProperties>>) {
         val emptyTile = TileProperties(0)
         //println("WorldData setting to: " + xmin + ", " + ymin)
         //Fill every column with an ArrayList of TileProperties
-        value.removeAll({true})
+        value.removeAll {true}
 
         for(i in 0..xmin-1) {
             value.add(ArrayList<TileProperties>())
@@ -23,9 +23,5 @@ value class WorldData(val value: ArrayList<ArrayList<TileProperties>>) {
         }
 
         //println("WorldData now sized at: " + value.size + ", " + value[0].size)
-    }
-
-    companion object {
-
     }
 }

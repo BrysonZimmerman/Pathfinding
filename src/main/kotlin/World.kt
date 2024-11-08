@@ -22,6 +22,16 @@ object World {
     val tiles = WorldData(ArrayList<ArrayList<TileProperties>>())
     var sizeX = 10
     var sizeY = 10
+    const val ANSI_RESET = "\u001B[0m"
+    const val ANSI_BLACK = "\u001B[30m"
+    const val ANSI_RED = "\u001B[31m"
+    const val ANSI_GREEN = "\u001B[32m"
+    const val ANSI_YELLOW = "\u001B[33m"
+    const val ANSI_BLUE = "\u001B[34m"
+    const val ANSI_PURPLE = "\u001B[35m"
+    const val ANSI_CYAN = "\u001B[36m"
+    const val ANSI_WHITE = "\u001B[37m"
+
 
     fun update(tile: Tile, to: TileProperties) {
        tiles.value[tile.x()][tile.y()] = to
@@ -45,15 +55,6 @@ object World {
     //TODO: https://en.wikipedia.org/wiki/Box-drawing_characters
     //^ make the maze look like a maze
     override fun toString(): String {
-        val ANSI_RESET = "\u001B[0m"
-        val ANSI_BLACK = "\u001B[30m"
-        val ANSI_RED = "\u001B[31m"
-        val ANSI_GREEN = "\u001B[32m"
-        val ANSI_YELLOW = "\u001B[33m"
-        val ANSI_BLUE = "\u001B[34m"
-        val ANSI_PURPLE = "\u001B[35m"
-        val ANSI_CYAN = "\u001B[36m"
-        val ANSI_WHITE = "\u001B[37m"
 
         val str = StringBuilder()
         var inPath = false
@@ -62,15 +63,15 @@ object World {
         for (y in 0..tiles.value[0].size - 1) {
             //Upper line: Print each tile, print right-hand connections
             for (x in 0..tiles.value[0].size - 1) {
-                if(World.get(Tile(x, y)).connections and(INPATH.dir) != 0)
+                if(get(Tile(x, y)).connections and(INPATH.dir) != 0)
                     inPath = true
-                else if (World.get(Tile(x, y)).connections and(FRONTIER.dir) != 0)
+                else if (get(Tile(x, y)).connections and(FRONTIER.dir) != 0)
                     checked = true
                 if(inPath)
                     str.append(ANSI_GREEN)
                 else if(checked)
                     str.append(ANSI_YELLOW)
-                str.append(getTileShapeDoubles(World.get(Tile(x, y))))
+                str.append(getTileShapeDoubles(get(Tile(x, y))))
                 if(inPath || checked)
                     str.append(ANSI_RESET)
                 inPath = false
@@ -102,6 +103,7 @@ object World {
             else -> '•'
         }
     }
+
     fun getTileShapeDoubles(tile: TileProperties): Char {
         return when(tile.connections and(MANIFEST.inv()) and(INPATH.inv()) and(FRONTIER.inv())) {
             UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir -> '╬'
