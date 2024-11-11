@@ -20,7 +20,7 @@ import technology.zim.data.Directions.*
 object World {
     //Default size should be 10
     val tiles = WorldData(ArrayList<ArrayList<TileProperties>>())
-    var sizeX = 10
+    var sizeX = 10 //Default size
     var sizeY = 10
     const val ANSI_RESET = "\u001B[0m"
     const val ANSI_BLACK = "\u001B[30m"

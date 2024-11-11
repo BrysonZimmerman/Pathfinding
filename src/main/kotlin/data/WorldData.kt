@@ -5,6 +5,20 @@ package technology.zim.data
 
 @JvmInline
 value class WorldData(val value: ArrayList<ArrayList<TileProperties>>) {
+
+    //Accepts a list of directions, removes those directions from every TileProperties in WorldData
+    fun scrubDirections(rem: List<Directions>) {
+        var mask = rem.fold(0) { sum, element -> sum + element.dir}
+        mask = mask.inv()
+        value.forEachIndexed {
+            x, row ->
+            row.forEachIndexed {
+                y, tile ->
+                value[x][y] = TileProperties(tile.connections and(mask))
+            }
+        }
+    }
+
     fun setSize(xmin : Int, ymin : Int) {
         val emptyTile = TileProperties(0)
         //println("WorldData setting to: " + xmin + ", " + ymin)
