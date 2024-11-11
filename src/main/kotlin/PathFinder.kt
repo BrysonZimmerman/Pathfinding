@@ -10,6 +10,7 @@ import technology.zim.data.TileHeap
 //and https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Comparator.html
 
 object PathFinder {
+    //TODO: Replace with array for coordinate lookups for speed - maybe abstract it?
     val gVals = HashMap<Tile, Int>()
     //work along the path, marking tiles with VISITED along the way
     //if marking with visited is too expensive, just make the path and finalize it
