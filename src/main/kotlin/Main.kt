@@ -10,6 +10,8 @@ class HierarchicalPathfinding {
         fun main(args: Array<String>) {
             val n = 1000
             buildMaze(n)
+
+            println("Pathfinding")
             var startTime = System.currentTimeMillis()
             PathFinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
             var endTime = System.currentTimeMillis()

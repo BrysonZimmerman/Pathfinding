@@ -18,6 +18,17 @@ object BFSPathFinder {
 
         //Queue for tiles to be checked
         val frontier = ArrayDeque<Tile>()
+        frontier.addLast(start)
+
+        while (frontier.isNotEmpty()) {
+            //Grab the next tile
+            
+            // Mark it explored
+
+            //record its distance-cost
+
+            // add its unexplored neighbors
+        }
 
     }
 

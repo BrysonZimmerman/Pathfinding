@@ -10,7 +10,7 @@ import technology.zim.data.TileHeap
 //and https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Comparator.html
 
 object PathFinder {
-    //TODO: Replace with array for coordinate lookups for speed - maybe abstract it?
+    //TODO: Replace with array for coordinate lookups for speed, do it in a separate pathfinder class to demonstrate the difference
     val gVals = HashMap<Tile, Int>()
     //work along the path, marking tiles with VISITED along the way
     //if marking with visited is too expensive, just make the path and finalize it
@@ -35,28 +35,18 @@ object PathFinder {
 
         do {
             current = frontier.popMin()
-            currentG = gVals.get(current) ?: 0.also { println("Failed to get gVal that must exist")}
+            currentG = gVals.get(current) ?: 0.also { println("Failed to get gVal that must exist") }
 
 
             current.getConnections().forEach { candidateTile ->
                 val candidateG = gVals.get(candidateTile)?:-1
                 //Ensure that the tile is within bounds
-                if(candidateTile.isInBounds())
+                if(candidateTile.isInBounds() && candidateG == -1)
                 {
-                    if(candidateG != -1) {
-                        //Then the candidateG already has a path leading to it, so check if the current path is better
-                        if(currentG + 1 < candidateG) {
-                            gVals.replace(candidateTile, candidateG)
-                            frontier.insert(candidateTile)
-
-                        }
-
-                    } else {
-                        //Otherwise, the tile has been reached and this path is not better, so carry on
-                        gVals.put(candidateTile, currentG + 1)
-                        frontier.insert(candidateTile)
-                        World.update(candidateTile, candidateTile.getProperties() +Directions.FRONTIER)
-                    }
+                    //Otherwise, the tile has been reached and this path is not better, so carry on
+                    gVals.put(candidateTile, currentG + 1)
+                    frontier.insert(candidateTile)
+                    World.update(candidateTile, candidateTile.getProperties() +Directions.FRONTIER)
                 }
             }
         } while( current != end)
@@ -64,8 +54,12 @@ object PathFinder {
         //At this point, a path is found
         println("Path found!")
 
+
+    }
+
+    fun markPath(start: Tile, end:Tile) {
         //Step through the path from end until start
-        current = end
+        var current = end
         var lowestG = Int.MAX_VALUE
         var lowestCost = end
         while(current != start) {
@@ -80,6 +74,6 @@ object PathFinder {
             current = lowestCost
         }
         World.update(start, start.getProperties() + Directions.INPATH)
-
     }
+
 }
