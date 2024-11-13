@@ -13,7 +13,7 @@ class HierarchicalPathfinding {
 
             println("Pathfinding")
             var startTime = System.currentTimeMillis()
-            PathFinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
+            MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
             var endTime = System.currentTimeMillis()
             val aStarMs = endTime - startTime
 

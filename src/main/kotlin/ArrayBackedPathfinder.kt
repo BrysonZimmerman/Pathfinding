@@ -4,12 +4,12 @@ import technology.zim.data.Directions
 import technology.zim.data.Tile
 import technology.zim.data.TileHeap
 
-//A* to be upgraded with hierarchies
+//A* pathfinder backed by an array to improve efficiency
 
 //Needs https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/PriorityQueue.html
 //and https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Comparator.html
 
-object PathFinder {
+object ArrayBackedPathfinder {
     //TODO: Replace with array for coordinate lookups for speed, do it in a separate pathfinder class to demonstrate the difference
     val gVals = HashMap<Tile, Int>()
     //work along the path, marking tiles with VISITED along the way
@@ -53,8 +53,6 @@ object PathFinder {
 
         //At this point, a path is found
         println("Path found!")
-
-
     }
 
     fun markPath(start: Tile, end:Tile) {
