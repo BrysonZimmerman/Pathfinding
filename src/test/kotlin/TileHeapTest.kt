@@ -7,11 +7,12 @@ import kotlin.test.BeforeTest
 
 class TileHeapTest {
     companion object {
-        var heap = TileHeap(Tile(20, 20))
+        var gVals = HashMap<Tile, Int>()
+        var heap = TileHeap(Tile(20, 20), gVals)
     }
     @BeforeTest
     fun setUp() {
-        heap = TileHeap(Tile(20, 20))
+        heap = TileHeap(Tile(20, 20), gVals)
         arrayOf(Tile(0, 0), Tile(1, 1), Tile(5, 5), Tile(4, 4), Tile(19, 19), Tile(2, 2)).forEach { item ->
             heap.insert(item)
         }
