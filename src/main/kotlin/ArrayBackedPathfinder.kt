@@ -13,10 +13,11 @@ import kotlin.math.abs
 
 object ArrayBackedPathfinder {
     //TODO: Replace with array for coordinate lookups for speed, do it in a separate pathfinder class to demonstrate the difference
-    val gVals = TileNavigatedArray<Int>()
+    val gVals = TileNavigatedArray<Int>(World.sizeX, World.sizeY, false)
     //work along the path, marking tiles with VISITED along the way
     //if marking with visited is too expensive, just make the path and finalize it
     fun generatePath(start: Tile, end: Tile) {
+
         if(!start.isInBounds() || !end.isInBounds()) {
             throw IndexOutOfBoundsException("Cannot generate a path to or from an out of bounds tile")
         }
@@ -54,6 +55,7 @@ object ArrayBackedPathfinder {
         } while( current != end)
 
         //At this point, a path is found
+        markPath(start, end)
         println("Path found!")
     }
 
