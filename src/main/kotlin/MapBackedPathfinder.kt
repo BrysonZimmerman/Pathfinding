@@ -3,6 +3,7 @@ package technology.zim
 import technology.zim.data.Directions
 import technology.zim.data.Tile
 import technology.zim.data.TileHeap
+import kotlin.math.abs
 
 //A* to be upgraded with hierarchies
 
@@ -23,7 +24,7 @@ object MapBackedPathfinder {
             return
         }
 
-        val frontier = TileHeap(end, gVals)
+        val frontier = TileHeap(end, this::fValue)
 
         //Prime the things
         gVals.put(start, 0)
@@ -52,6 +53,15 @@ object MapBackedPathfinder {
 
         //At this point, a path is found
         println("Path found!")
+        markPath(start, end)
+    }
+
+    private fun fValue(prospect: Tile, end: Tile): Int {
+        return hValue(prospect, end).plus(gVals.get(prospect) ?: 0)
+    }
+
+    private fun hValue(prospect: Tile, end:Tile): Int {
+        return abs(prospect.x() - end.x()) + abs(prospect.y() - end.y())
     }
 
     fun markPath(start: Tile, end:Tile) {

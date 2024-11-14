@@ -3,6 +3,8 @@ package technology.zim
 import technology.zim.data.Directions
 import technology.zim.data.Tile
 import technology.zim.data.TileHeap
+import technology.zim.data.TileNavigatedArray
+import kotlin.math.abs
 
 //A* pathfinder backed by an array to improve efficiency
 
@@ -11,7 +13,7 @@ import technology.zim.data.TileHeap
 
 object ArrayBackedPathfinder {
     //TODO: Replace with array for coordinate lookups for speed, do it in a separate pathfinder class to demonstrate the difference
-    val gVals = HashMap<Tile, Int>()
+    val gVals = TileNavigatedArray<Int>()
     //work along the path, marking tiles with VISITED along the way
     //if marking with visited is too expensive, just make the path and finalize it
     fun generatePath(start: Tile, end: Tile) {
@@ -24,10 +26,10 @@ object ArrayBackedPathfinder {
             return
         }
 
-        val frontier = TileHeap(end, gVals)
+        val frontier = TileHeap(end, this::fValue)
 
         //Prime the things
-        gVals.put(start, 0)
+        gVals.set(start, 0)
         frontier.insert(start)
 
         var current: Tile
@@ -44,7 +46,7 @@ object ArrayBackedPathfinder {
                 if(candidateTile.isInBounds() && candidateG == -1)
                 {
                     //Otherwise, the tile has been reached and this path is not better, so carry on
-                    gVals.put(candidateTile, currentG + 1)
+                    gVals.set(candidateTile, currentG + 1)
                     frontier.insert(candidateTile)
                     World.update(candidateTile, candidateTile.getProperties() +Directions.FRONTIER)
                 }
@@ -74,4 +76,11 @@ object ArrayBackedPathfinder {
         World.update(start, start.getProperties() + Directions.INPATH)
     }
 
+    private fun fValue(prospect: Tile, end: Tile): Int {
+        return hValue(prospect, end).plus(MapBackedPathfinder.gVals.get(prospect) ?: 0)
+    }
+
+    private fun hValue(prospect: Tile, end:Tile): Int {
+        return abs(prospect.x() - end.x()) + abs(prospect.y() - end.y())
+    }
 }

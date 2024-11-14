@@ -6,7 +6,7 @@ import kotlin.math.abs
 //Translated code from CS222 MaxHeap homework
 //Cannot use index 0 due to Integer limitations
 //TODO: Consider better options than passing in the information this thing needs
-class TileHeap(val end: Tile, val gVals: HashMap<Tile, Int>) {
+class TileHeap(val end: Tile, val fValue:(Tile, Tile) -> Int) {
    val dat = ArrayList<Tile>()
     init {
         //Shove some data into the zero slot
@@ -36,7 +36,7 @@ class TileHeap(val end: Tile, val gVals: HashMap<Tile, Int>) {
         if(dat.isEmpty())
             throw ArrayIndexOutOfBoundsException()
 
-        if(fValue(dat[index]) < fValue(dat[parent(index)]) && index > 1) {
+        if(fValue(dat[index], end) < fValue(dat[parent(index)], end) && index > 1) {
             swap(index, parent(index))
             siftUp(parent(index))
         }
@@ -47,12 +47,12 @@ class TileHeap(val end: Tile, val gVals: HashMap<Tile, Int>) {
             var minValueIndex = index
 
             val l = leftChild(index)
-            if(l < dat.size && fValue(dat[l]) < fValue(dat[minValueIndex]) ) {
+            if(l < dat.size && fValue(dat[l], end) < fValue(dat[minValueIndex], end) ) {
                 minValueIndex = l
             }
 
             val r = rightChild(index)
-            if(r < dat.size && fValue(dat[r]) < fValue(dat[minValueIndex])) {
+            if(r < dat.size && fValue(dat[r], end) < fValue(dat[minValueIndex], end) ) {
                 minValueIndex = r
             }
 
@@ -76,14 +76,6 @@ class TileHeap(val end: Tile, val gVals: HashMap<Tile, Int>) {
 
     private fun isLeaf(index: Int): Boolean {
         return index > (dat.size / 2)
-    }
-
-    private fun fValue(prospect: Tile): Int {
-        return hValue(prospect).plus(gVals.get(prospect) ?: 0)
-    }
-
-    private fun hValue(prospect: Tile): Int {
-        return abs(prospect.x() - end.x()) + abs(prospect.y() - end.y())
     }
 
 }
