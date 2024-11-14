@@ -1,15 +1,31 @@
 package technology.zim.data
 
+import java.util.Arrays
+import kotlin.arrayOfNulls
+
 //Generic array that accepts a Tile for item lookups
 //Row-major for improved memory locality.. maybe make it flexible?
 
 //Delegation should allow direct access to functions, with added functions for convenience
 class TileNavigatedArray<T>(val data: ArrayList<T?> = ArrayList<T?>(), var colSize:Int = 10,
                             var rowSize:Int = 10, val colMajor:Boolean = false) : MutableList<T?> by data {
-//TODO: Create initializer that fills array with null values
-
 
     constructor(col:Int, row:Int,major:Boolean) : this(colSize = col, rowSize = row,colMajor = major) {
+    }
+    init {
+        for(i in 0..rowSize*colSize){
+            data.add(null)
+        }
+    }
+
+    //TODO: Test resize properly
+    fun resize(colSize:Int, rowSize:Int) {
+        this.colSize = colSize
+        this.rowSize = rowSize
+        for(i in data.size..colSize*rowSize-data.size) {
+            data.add(null)
+        }
+        assert(data.size == this.colSize*this.rowSize)
     }
 
     //Accept a tile, use its coordinates to pull the requested data
