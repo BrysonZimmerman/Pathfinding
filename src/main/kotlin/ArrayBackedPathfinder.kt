@@ -79,7 +79,7 @@ object ArrayBackedPathfinder {
     }
 
     private fun fValue(prospect: Tile, end: Tile): Int {
-        return hValue(prospect, end).plus(MapBackedPathfinder.gVals.get(prospect) ?: 0)
+        return hValue(prospect, end).plus(gVals.get(prospect) ?: 0)
     }
 
     private fun hValue(prospect: Tile, end:Tile): Int {

@@ -9,19 +9,33 @@ class HierarchicalPathfinding {
         @JvmStatic
         fun main(args: Array<String>) {
             val n = 1000
+            println("Building maze")
+            var startTime = System.currentTimeMillis()
             buildMaze(n)
+            var endTime = System.currentTimeMillis()
+            val buildMazeTime = endTime - startTime
 
             println("Pathfinding")
-            var startTime = System.currentTimeMillis()
+
+            startTime = System.currentTimeMillis()
             MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
-            var endTime = System.currentTimeMillis()
-            val aStarMs = endTime - startTime
+            endTime = System.currentTimeMillis()
+            val MapBackedPathfinderTime = endTime - startTime
+
+            World.tiles.scrubDirections(listOf(Directions.FRONTIER, Directions.INPATH, Directions.NOPATH))
+
+            startTime = System.currentTimeMillis()
+            ArrayBackedPathfinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
+            endTime = System.currentTimeMillis()
+            val ArrayBackedPathfinderTime = endTime - startTime
 
 
 
             println(World.toString())
             println(n*n)
-            println((endTime - startTime).toString() + "ms")
+            println("Maze build time: ${buildMazeTime} ms")
+            println("HashMap-Backed Pathfinder time: ${MapBackedPathfinderTime}ms")
+            println("Array-Backed Pathfinder time: ${ArrayBackedPathfinderTime} ms")
         }
 
         //Clear the maze of pathfinding markers before running another pathfinding algorithm
