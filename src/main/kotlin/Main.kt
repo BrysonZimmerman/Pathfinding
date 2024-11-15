@@ -18,16 +18,18 @@ class HierarchicalPathfinding {
             println("Pathfinding")
 
             startTime = System.currentTimeMillis()
-            MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
+            ArrayBackedPathfinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
             endTime = System.currentTimeMillis()
-            val MapBackedPathfinderTime = endTime - startTime
+            val ArrayBackedPathfinderTime = endTime - startTime
 
             World.tiles.scrubDirections(listOf(Directions.FRONTIER, Directions.INPATH, Directions.NOPATH))
 
             startTime = System.currentTimeMillis()
-            ArrayBackedPathfinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
+            MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
             endTime = System.currentTimeMillis()
-            val ArrayBackedPathfinderTime = endTime - startTime
+            val MapBackedPathfinderTime = endTime - startTime
+
+
 
 
 
