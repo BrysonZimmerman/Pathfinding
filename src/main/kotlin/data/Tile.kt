@@ -43,8 +43,8 @@ value class Tile(private val value: ULong) {
     }
 
     //Get adjacent tiles for Prim's Algorithm
-    fun getAdjacentTiles(explored:Boolean): Set<Tile> {
-        val adj = mutableSetOf<Tile>()
+    fun getAdjacentTiles(explored:Boolean): ArrayList<Tile> {
+        val adj = arrayListOf<Tile>()
         val dirs = Directions.ALL
 
         dirs.forEach { dir ->
@@ -115,8 +115,8 @@ value class Tile(private val value: ULong) {
     }
 
     //Get connections for pathfinding algorithms
-    fun getConnections(): Set<Tile> {
-        val connections = mutableSetOf<Tile>()
+    fun getConnections(): ArrayList<Tile> {
+        val connections = arrayListOf<Tile>()
         val properties = getProperties()
         if(properties.connections and(Directions.UP.dir) != 0) {
             connections.add(this + Directions.NORTH)

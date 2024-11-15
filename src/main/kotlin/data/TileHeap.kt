@@ -68,8 +68,10 @@ class TileHeap(val end: Tile, val fValue:(Tile, Tile) -> Int) {
     private fun leftChild(index: Int): Int = index * 2
     private fun rightChild(index: Int): Int = (index * 2) + 1
 
+    //Instead of allocating the memory every time, do it once.
+    var index1tmp:Tile = Tile(0, 0)
     private fun swap(index1: Int, index2: Int) {
-        val index1tmp = dat[index1]
+        index1tmp = dat[index1]
         dat[index1] = dat[index2]
         dat[index2] = index1tmp
     }

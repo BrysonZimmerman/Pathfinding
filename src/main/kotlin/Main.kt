@@ -25,18 +25,18 @@ class HierarchicalPathfinding {
             val ArrayBackedPathfinderTime = measureTime {
                 ArrayBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, (n - 1)))
             }
-/*
+
             val MapBackedPathfinderTime = measureTime {
                 MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, (n - 1)))
             }
-            */
+
 
             println(World.toString())
             println(n*n)
             println("Maze build time: ${buildMazeTime.inWholeMilliseconds} ms")
-            //println("HashMap-Backed Pathfinder time: ${MapBackedPathfinderTime.inWholeMilliseconds}ms")
-            println("Array-Backed Pathfinder time: ${ArrayBackedPathfinderTime.inWholeMilliseconds}ms")
             println("BFS Pathfinder time: ${BFSPathFinderTime.inWholeMilliseconds}ms")
+            println("Array-Backed Pathfinder time: ${ArrayBackedPathfinderTime.inWholeMilliseconds}ms")
+            println("HashMap-Backed Pathfinder time: ${MapBackedPathfinderTime.inWholeMilliseconds}ms")
         }
 
         //Clear the maze of pathfinding markers before running another pathfinding algorithm

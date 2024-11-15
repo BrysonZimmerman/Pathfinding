@@ -39,7 +39,7 @@ object MazeFinder {
 
         var current: Tile
         var inGraph: Tile
-        var adjacentExplored: Set<Tile>
+        var adjacentExplored: ArrayList<Tile>
         while(frontier.isNotEmpty()) {
             //Grab a random tile from the frontier
             val random = randGen.nextInt(frontier.size)
