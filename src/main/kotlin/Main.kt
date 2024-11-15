@@ -2,38 +2,33 @@ package technology.zim
 
 import technology.zim.data.Directions
 import technology.zim.data.Tile
+import kotlin.time.measureTime
 
 class HierarchicalPathfinding {
+
     companion object {
-        //TODO: Run tests of World with nested ArrayList vs TileNavigatedArray
         @JvmStatic
         fun main(args: Array<String>) {
             val n = 1000
             println("Building maze")
-            var startTime = System.currentTimeMillis()
-            buildMaze(n)
-            var endTime = System.currentTimeMillis()
-            val buildMazeTime = endTime - startTime
+            val buildMazeTime = measureTime {
+                buildMaze(n)
+            }
 
             println("Pathfinding")
+            val ArrayBackedPathfinderTime = measureTime {
+                ArrayBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, (n - 1)))
+            }
 
-            startTime = System.currentTimeMillis()
-            ArrayBackedPathfinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
-            endTime = System.currentTimeMillis()
-            val ArrayBackedPathfinderTime = endTime - startTime
-
-            //World.scrubDirections(listOf(Directions.FRONTIER, Directions.INPATH, Directions.NOPATH))
-
-            startTime = System.currentTimeMillis()
-            //MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
-            endTime = System.currentTimeMillis()
-            val MapBackedPathfinderTime = endTime - startTime
+            val MapBackedPathfinderTime = measureTime {
+                MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, (n - 1)))
+            }
 
             println(World.toString())
             println(n*n)
-            println("Maze build time: ${buildMazeTime} ms")
-            println("HashMap-Backed Pathfinder time: ${MapBackedPathfinderTime}ms")
-            println("Array-Backed Pathfinder time: ${ArrayBackedPathfinderTime} ms")
+            println("Maze build time: ${buildMazeTime.inWholeMilliseconds} ms")
+            println("HashMap-Backed Pathfinder time: ${MapBackedPathfinderTime.inWholeMilliseconds}ms")
+            println("Array-Backed Pathfinder time: ${ArrayBackedPathfinderTime.inWholeMilliseconds}ms")
         }
 
         //Clear the maze of pathfinding markers before running another pathfinding algorithm
@@ -53,6 +48,9 @@ class HierarchicalPathfinding {
                 println(World.toString())
                 println(e.message)
             }
+
+
         }
     }
+
 }
