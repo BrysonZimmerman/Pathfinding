@@ -1,10 +1,12 @@
 package technology.zim
 
+import technology.zim.data.Directions
 import technology.zim.data.Tile
 import technology.zim.data.TileProperties
 import technology.zim.data.WorldData
 import java.util.*
 import technology.zim.data.Directions.*
+import technology.zim.data.TileNavigatedArray
 
 //Singleton object containing a set of tiles
 //Has helper functions included
@@ -19,7 +21,7 @@ import technology.zim.data.Directions.*
 
 object World {
     //Default size should be 10
-    val tiles = WorldData(ArrayList<ArrayList<TileProperties>>())
+    val tiles = TileNavigatedArray<TileProperties>()
     var sizeX = 10 //Default size
     var sizeY = 10
     const val ANSI_RESET = "\u001B[0m"
@@ -34,11 +36,11 @@ object World {
 
 
     fun update(tile: Tile, to: TileProperties) {
-       tiles.value[tile.x()][tile.y()] = to
+       tiles.set(tile, to)
     }
 
     fun get(tile: Tile): TileProperties {
-        return tiles.value[tile.x()][tile.y()]
+        return tiles.get(tile)?: TileProperties(0)
     }
 
     //Returns a coordinate pair
@@ -49,20 +51,29 @@ object World {
     fun setSize(x: Int, y: Int) {
         sizeX = x
         sizeY = y
-        tiles.setSize(x, y)
+        tiles.resize(x, y)
     }
 
-    //TODO: https://en.wikipedia.org/wiki/Box-drawing_characters
-    //^ make the maze look like a maze
+    //Accepts a list of directions, removes those directions from every TileProperties in WorldData
+    fun scrubDirections(rem: List<Directions>) {
+        var mask = rem.fold(0) { sum, element -> sum + element.dir}
+        mask = mask.inv()
+        tiles.forEachIndexed {
+                index, tile ->
+                tiles[index] = TileProperties((tile?:TileProperties(0)).connections and(mask))
+        }
+    }
+
+
     override fun toString(): String {
 
         val str = StringBuilder()
         var inPath = false
         var checked = false
         //Reading left to right, top to bottom - can do a simple for each on the rows
-        for (y in 0..tiles.value[0].size - 1) {
+        for (y in 0..sizeY - 1) {
             //Upper line: Print each tile, print right-hand connections
-            for (x in 0..tiles.value[0].size - 1) {
+            for (x in 0..sizeX - 1) {
                 if(get(Tile(x, y)).connections and(INPATH.dir) != 0)
                     inPath = true
                 else if (get(Tile(x, y)).connections and(FRONTIER.dir) != 0)
