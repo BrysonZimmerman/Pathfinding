@@ -4,7 +4,7 @@ import technology.zim.data.Directions
 import technology.zim.data.Tile
 import technology.zim.data.TileNavigatedArray
 
-object BFSPathFinder {
+object BFSPathfinder {
     //In this particular situation, only a single outcome is likely. Thus, BFS always finds the perfect (and only) path
     //Skipping the Heap data structure allows better utilization of on-die cache
     var gVals:TileNavigatedArray<Int> = TileNavigatedArray<Int>()
@@ -30,7 +30,7 @@ object BFSPathFinder {
         while (frontier.isNotEmpty()) {
             //Grab the next tile and its gValue
             current = frontier.removeFirst()
-            val currentG = gVals.get(current)?:Int.MAX_VALUE-1.also{throw IndexOutOfBoundsException("Couldn't get gValue in BFS")}
+            val currentG = gVals.get(current) ?: (Int.MAX_VALUE - 1).also{throw IndexOutOfBoundsException("Couldn't get gValue in BFS")}
 
             // add its unexplored neighbors and update their gVals
             current.getConnections().forEach {

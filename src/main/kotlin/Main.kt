@@ -1,6 +1,5 @@
 package technology.zim
 
-import technology.zim.data.Directions
 import technology.zim.data.Tile
 import kotlin.time.measureTime
 
@@ -17,16 +16,16 @@ class HierarchicalPathfinding {
 
             println("Pathfinding")
 
-            val BFSPathFinderTime = measureTime {
-                BFSPathFinder.generatePath(Tile(0, 0), Tile(n-1, n-1))
+            val bfsPathfinderTime = measureTime {
+                BFSPathfinder.generatePath(Tile(0, 0), Tile(n-1, n-1))
             }
 
 
-            val ArrayBackedPathfinderTime = measureTime {
+            val arrayBackedPathfinderTime = measureTime {
                 ArrayBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, (n - 1)))
             }
 
-            val MapBackedPathfinderTime = measureTime {
+            val mapBackedPathfinderTime = measureTime {
                 MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, (n - 1)))
             }
 
@@ -34,14 +33,9 @@ class HierarchicalPathfinding {
             println(World.toString())
             println(n*n)
             println("Maze build time: ${buildMazeTime.inWholeMilliseconds} ms")
-            println("BFS Pathfinder time: ${BFSPathFinderTime.inWholeMilliseconds}ms")
-            println("Array-Backed Pathfinder time: ${ArrayBackedPathfinderTime.inWholeMilliseconds}ms")
-            println("HashMap-Backed Pathfinder time: ${MapBackedPathfinderTime.inWholeMilliseconds}ms")
-        }
-
-        //Clear the maze of pathfinding markers before running another pathfinding algorithm
-        fun clearMaze() {
-            World.scrubDirections(listOf(Directions.FRONTIER, Directions.INPATH))
+            println("BFS Pathfinder time: ${bfsPathfinderTime.inWholeMilliseconds}ms")
+            println("Array-Backed Pathfinder time: ${arrayBackedPathfinderTime.inWholeMilliseconds}ms")
+            println("HashMap-Backed Pathfinder time: ${mapBackedPathfinderTime.inWholeMilliseconds}ms")
         }
 
         fun buildMaze(n: Int) {
