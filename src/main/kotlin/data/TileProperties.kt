@@ -58,6 +58,10 @@ value class TileProperties(val connections: Int) {
         return connections and(MANIFEST.dir) == MANIFEST.dir
     }
 
+    fun isBFSFrontier(): Boolean {
+        return connections and(BFSFRONTIER.dir) == BFSFRONTIER.dir
+    }
+
     override fun toString():String {
         val ret = StringBuilder()
         if(isWest()) {

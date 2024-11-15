@@ -34,6 +34,9 @@ object World {
     const val ANSI_CYAN = "\u001B[36m"
     const val ANSI_WHITE = "\u001B[37m"
 
+    fun update(tile: Tile, dir: Directions) {
+        update(tile, get(tile) + dir)
+    }
 
     fun update(tile: Tile, to: TileProperties) {
        tiles.set(tile, to)
@@ -74,7 +77,7 @@ object World {
         for (y in 0..sizeY - 1) {
             //Upper line: Print each tile, print right-hand connections
             for (x in 0..sizeX - 1) {
-                if(get(Tile(x, y)).connections and(INPATH.dir) != 0)
+                if(get(Tile(x, y)).connections and(INPATH.dir+BFSINPATH.dir) != 0)
                     inPath = true
                 else if (get(Tile(x, y)).connections and(FRONTIER.dir) != 0)
                     checked = true

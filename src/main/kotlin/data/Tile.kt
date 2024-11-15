@@ -5,6 +5,8 @@ import technology.zim.World
 //Tile is a ULong that represents the X,Y coordinates of a Tile
 //Contains functions necessary for accessing and manipulating Tiles
 
+//TODO: Untangle visited maths
+
 @JvmInline
 value class Tile(private val value: ULong) {
 
@@ -40,6 +42,7 @@ value class Tile(private val value: ULong) {
         return Directions.convertModifier(Tile(otherTile.x() - this.x(), otherTile.y() - this.y()).value)
     }
 
+    //Get adjacent tiles for Prim's Algorithm
     fun getAdjacentTiles(explored:Boolean): Set<Tile> {
         val adj = mutableSetOf<Tile>()
         val dirs = Directions.ALL
@@ -111,6 +114,7 @@ value class Tile(private val value: ULong) {
         return "<" + x() + ", " + y() + ">"
     }
 
+    //Get connections for pathfinding algorithms
     fun getConnections(): Set<Tile> {
         val connections = mutableSetOf<Tile>()
         val properties = getProperties()
