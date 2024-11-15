@@ -4,8 +4,8 @@ import technology.zim.data.Directions
 import technology.zim.data.Tile
 
 class HierarchicalPathfinding {
-
     companion object {
+        //TODO: Run tests of World with nested ArrayList vs TileNavigatedArray
         @JvmStatic
         fun main(args: Array<String>) {
             val n = 1000
@@ -22,16 +22,12 @@ class HierarchicalPathfinding {
             endTime = System.currentTimeMillis()
             val ArrayBackedPathfinderTime = endTime - startTime
 
-            World.tiles.scrubDirections(listOf(Directions.FRONTIER, Directions.INPATH, Directions.NOPATH))
+            //World.scrubDirections(listOf(Directions.FRONTIER, Directions.INPATH, Directions.NOPATH))
 
             startTime = System.currentTimeMillis()
-            MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
+            //MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n-1, (n-1)))
             endTime = System.currentTimeMillis()
             val MapBackedPathfinderTime = endTime - startTime
-
-
-
-
 
             println(World.toString())
             println(n*n)
@@ -42,7 +38,7 @@ class HierarchicalPathfinding {
 
         //Clear the maze of pathfinding markers before running another pathfinding algorithm
         fun clearMaze() {
-            World.tiles.scrubDirections(listOf(Directions.FRONTIER, Directions.INPATH))
+            World.scrubDirections(listOf(Directions.FRONTIER, Directions.INPATH))
         }
 
         fun buildMaze(n: Int) {
@@ -57,9 +53,6 @@ class HierarchicalPathfinding {
                 println(World.toString())
                 println(e.message)
             }
-
-
         }
     }
-
 }
