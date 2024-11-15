@@ -13,46 +13,41 @@ class MazeFinderTest {
         MazeFinder.primsAlgorithm()
     }
 
+    //Top row must have at least one south connection and no north connections
     @Test
     fun topRowOutOfBoundsCheck() {
         var southExists = false
-        World.tiles.value.forEach {
-            col ->
-            if(col[0].isSouth())
+        for(x in 0..<World.sizeX) {
+            assert(!World.get(Tile(x, 0)).isNorth())
+            if(World.get(Tile(x, 0)).isSouth())
                 southExists = true
+
         }
         assert(southExists)
     }
 
+    //Bottom row cannot have any south connections
     @Test
     fun bottomRowOutOfBoundsCheck() {
-        var southNotExists = true
-        World.tiles.value.forEach {
-            col ->
-            if(col[9].isSouth())
-                southNotExists = false
+        for(x in 0..<World.sizeX) {
+            assert(!World.get(Tile(x, World.sizeY-1)).isSouth())
         }
-        assert(southNotExists)
     }
 
     @Test
     fun allTilesVisited() {
-        World.tiles.value.forEach {
-            col ->
-            col.forEach {
-                tile ->
-                assert(tile.visited())
+        for(x in 0..<World.sizeX) {
+            for(y in 0..<World.sizeY) {
+                assert(World.get(Tile(x, y)).visited())
             }
         }
     }
 
     @Test
     fun allTilesHaveConnections() {
-        World.tiles.value.forEachIndexed {
-            x,
-            col ->
-            col.forEachIndexed { y,
-                tileprop ->
+        for(x in 0..<World.sizeX) {
+            for(y in 0..<World.sizeY) {
+                val tileprop = World.get(Tile(x, y))
                 if(!tileprop.visited())
                     println("Empty Connections at: " + Tile(x, y).toString())
                 assert(tileprop.visited())
