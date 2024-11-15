@@ -95,7 +95,7 @@ object World {
     }
 
     fun getTileShape(tile: TileProperties): Char {
-        return when(tile.connections) {
+        return when(tile.connections and(UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir )) {
             UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir -> '╋'
             UP.dir+DOWN.dir+LEFT.dir -> '┫'
             UP.dir+DOWN.dir+RIGHT.dir -> '┣'
@@ -116,7 +116,7 @@ object World {
     }
 
     fun getTileShapeDoubles(tile: TileProperties): Char {
-        return when(tile.connections and(MANIFEST.inv()) and(INPATH.inv()) and(FRONTIER.inv())) {
+        return when(tile.connections and(UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir )) {
             UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir -> '╬'
             UP.dir+DOWN.dir+LEFT.dir -> '╣'
             UP.dir+DOWN.dir+RIGHT.dir -> '╠'

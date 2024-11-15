@@ -80,7 +80,7 @@ object MapBackedPathfinder {
             }
             current = lowestCost
         }
-        World.update(start, start.getProperties() + Directions.INPATH)
+        World.update(start, start.getProperties() + Directions.HMINPATH)
     }
 
 }
