@@ -7,9 +7,13 @@ enum class Directions(val dir: Int) {
     LEFT(4),
     RIGHT(8),
     MANIFEST(16),//Was added to MazeFinder's frontier, but the pathfinder has a frontier so this is named something other than frontier
-    FRONTIER(32), //Added to the pathfinder's frontier
-    INPATH(64), //Chosen by the pathfinder
-    NOPATH(128) //Tile is not a viable path
+    FRONTIER(32), //Added to the ArrayBackedPathfinder's frontier
+    INPATH(64), //Chosen by the ArrayBackedPathfinder
+    HMFRONTIER(128), //Tile is not a viable path
+    HMINPATH(256),
+    BFSFRONTIER(512),
+    BFSINPATH(1024),
+
     ;
 
     companion object {

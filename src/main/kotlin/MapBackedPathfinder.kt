@@ -46,7 +46,7 @@ object MapBackedPathfinder {
                     //Otherwise, the tile has been reached and this path is not better, so carry on
                     gVals.put(candidateTile, currentG + 1)
                     frontier.insert(candidateTile)
-                    World.update(candidateTile, candidateTile.getProperties() +Directions.FRONTIER)
+                    World.update(candidateTile, candidateTile.getProperties() +Directions.HMFRONTIER)
                 }
             }
         } while( current != end)
@@ -70,7 +70,7 @@ object MapBackedPathfinder {
         var lowestG = Int.MAX_VALUE
         var lowestCost = end
         while(current != start) {
-            World.update(current, current.getProperties() + Directions.INPATH)
+            World.update(current, current.getProperties() + Directions.HMINPATH)
             current.getConnections().forEach { candidateTile ->
                 val candidateG = gVals.get(candidateTile) ?: -1
                 if(candidateTile.isInBounds() && candidateG != -1 && candidateG < lowestG ) {
