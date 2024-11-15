@@ -18,11 +18,11 @@ class TileNavigatedArray<T>(val data: ArrayList<T?> = ArrayList<T?>(), var colSi
         }
     }
 
-    //TODO: Test resize properly
     fun resize(colSize:Int, rowSize:Int) {
         this.colSize = colSize
         this.rowSize = rowSize
-        for(i in data.size..colSize*rowSize-data.size) {
+        data.clear()
+        for(i in 0..rowSize*colSize){
             data.add(null)
         }
         assert(data.size == this.colSize*this.rowSize)
