@@ -44,7 +44,7 @@ value class Tile(private val value: ULong) {
 
     //Get adjacent tiles for Prim's Algorithm
     fun getAdjacentTiles(explored:Boolean): ArrayList<Tile> {
-        val adj = arrayListOf<Tile>()
+        val adj = ArrayList<Tile>(4)
         val dirs = Directions.ALL
 
         dirs.forEach { dir ->
