@@ -52,7 +52,7 @@ object BFSPathfinder {
         while(current != start) {
             World.update(current, current.getProperties() + Directions.BFSINPATH)
             current.getConnections().forEach { candidateTile ->
-                val candidateG = gVals.get(candidateTile) ?: -1
+                val candidateG = gVals.get(candidateTile) ?: (-1).also { println("Missing gVal at ${candidateTile.toString()}")}
                 if(candidateTile.isInBounds() && candidateG != -1 && candidateG < lowestG ) {
                     lowestG = candidateG
                     lowestCost = candidateTile
