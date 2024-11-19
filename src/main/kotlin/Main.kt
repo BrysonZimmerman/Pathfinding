@@ -1,6 +1,7 @@
 package technology.zim
 
 import technology.zim.data.Tile
+import java.text.NumberFormat
 import java.util.Locale
 import kotlin.time.measureTime
 
@@ -40,14 +41,13 @@ class HierarchicalPathfinding {
                 MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, (n - 1)))
             }
 
-
+            val numberFormat = NumberFormat.getInstance(Locale.US)
             println(World.toString())
-            print("Tiles in Maze: ")
-            println(String.format(Locale.US, "%,d", n*n))
-            println("Maze build time: ${String.format(Locale.US, "%,d",buildMazeTime.inWholeMilliseconds)} ms")
-            println("BFS Pathfinder time: ${String.format(Locale.US, "%,d",bfsPathfinderTime.inWholeMilliseconds)}ms")
-            println("Array-Backed A* Pathfinder time: ${String.format(Locale.US, "%,d",arrayBackedPathfinderTime.inWholeMilliseconds)}ms")
-            println("HashMap-Backed A* Pathfinder time: ${String.format(Locale.US, "%,d",mapBackedPathfinderTime.inWholeMilliseconds)}ms")
+            println(numberFormat.format(n*n))
+            println("Maze build time: ${numberFormat.format(buildMazeTime.inWholeMilliseconds)} ms")
+            println("BFS Pathfinder time: ${numberFormat.format(bfsPathfinderTime.inWholeMilliseconds)}ms")
+            println("Array-Backed Pathfinder time: ${numberFormat.format(arrayBackedPathfinderTime.inWholeMilliseconds)}ms")
+            println("HashMap-Backed Pathfinder time: ${numberFormat.format(mapBackedPathfinderTime.inWholeMilliseconds)}ms")
         }
 
         fun buildMaze(n: Int) {

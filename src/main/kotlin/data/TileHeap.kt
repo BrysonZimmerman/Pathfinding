@@ -1,16 +1,12 @@
 package technology.zim.data
 
-import java.util.HashMap
-import kotlin.math.abs
-
 //Translated code from CS222 MaxHeap homework
 //Cannot use index 0 due to Integer limitations
-//TODO: Consider better options than passing in the information this thing needs
 class TileHeap(val end: Tile, val fValue:(Tile, Tile) -> Int) {
    val dat = ArrayList<Tile>()
     init {
         //Shove some data into the zero slot
-        if(dat.isEmpty)
+        if(dat.isEmpty())
             dat.add(Tile(0, 0))
     }
 

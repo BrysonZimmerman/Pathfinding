@@ -9,8 +9,6 @@ import technology.zim.data.Directions.*
 
 //For now, a simple inline class to mitigate memory usage
 
-
-
 @JvmInline
 value class TileProperties(val connections: Int) {
 
@@ -19,7 +17,7 @@ value class TileProperties(val connections: Int) {
     }
 
     //Remove a direction from the list of connections
-    @SuppressWarnings
+    @Suppress("unused") //Debug function, leaving in
     fun remove(dir: Directions): TileProperties {
         return TileProperties(connections and(dir.dir.inv()))
     }

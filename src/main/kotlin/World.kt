@@ -3,8 +3,6 @@ package technology.zim
 import technology.zim.data.Directions
 import technology.zim.data.Tile
 import technology.zim.data.TileProperties
-import technology.zim.data.WorldData
-import java.util.*
 import technology.zim.data.Directions.*
 import technology.zim.data.TileNavigatedArray
 
@@ -19,6 +17,7 @@ import technology.zim.data.TileNavigatedArray
 //Each element contains a TileProperties
 //  Which currently only contains the edges of the "graph", stored as directions
 
+@Suppress("unused")
 object World {
     //Default size should be 10
     val tiles = TileNavigatedArray<TileProperties>()
@@ -57,17 +56,6 @@ object World {
         tiles.resize(x, y)
     }
 
-    //Accepts a list of directions, removes those directions from every TileProperties in WorldData
-    fun scrubDirections(rem: List<Directions>) {
-        var mask = rem.fold(0) { sum, element -> sum + element.dir}
-        mask = mask.inv()
-        tiles.forEachIndexed {
-                index, tile ->
-                tiles[index] = TileProperties((tile?:TileProperties(0)).connections and(mask))
-        }
-    }
-
-
     override fun toString(): String {
 
         val str = StringBuilder()
@@ -97,6 +85,7 @@ object World {
         return str.toString()
     }
 
+    @Suppress("unused")
     fun getTileShape(tile: TileProperties): Char {
         return when(tile.connections and(UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir )) {
             UP.dir+DOWN.dir+LEFT.dir+RIGHT.dir -> '╋'

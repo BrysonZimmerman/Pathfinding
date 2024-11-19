@@ -5,8 +5,6 @@ import technology.zim.World
 //Tile is a ULong that represents the X,Y coordinates of a Tile
 //Contains functions necessary for accessing and manipulating Tiles
 
-//TODO: Untangle visited maths
-
 @JvmInline
 value class Tile(private val value: ULong) {
 
@@ -85,7 +83,7 @@ value class Tile(private val value: ULong) {
 
 
     //Debug function to print the coordinates of this Tile
-    @SuppressWarnings
+    @Suppress("unused")
     fun getCoordinates(): Pair<Int, Int> {
         return Pair(x(), y())
     }
