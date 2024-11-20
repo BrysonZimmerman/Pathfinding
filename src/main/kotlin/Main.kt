@@ -2,8 +2,6 @@ package technology.zim
 
 import technology.zim.data.Tile
 import java.io.File
-import java.text.NumberFormat
-import java.util.Locale
 import kotlin.time.measureTime
 
 class HierarchicalPathfinding {
@@ -26,7 +24,7 @@ class HierarchicalPathfinding {
             val ns = arrayListOf(50, 100, 250, 500, 750, 1000)
             val iterations = 10
             val file = File("performance.csv")
-            file.writeText("n, build, bfs, astar-array, astar-hashmap\n")
+            file.writeText("n,path-length,build,bfs,astar-array,astar-hashmap\n")
 
             if(benchmarking) {
                 for (n in ns) {
@@ -70,7 +68,7 @@ class HierarchicalPathfinding {
             var mapBackedPathfinderTime = measureTime {
                 MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, n - 1))
             }
-            file.appendText("${n},${buildMazeTime.inWholeMilliseconds},${bfsPathfinderTime.inWholeMilliseconds},${arrayBackedPathfinderTime.inWholeMilliseconds},${mapBackedPathfinderTime.inWholeMilliseconds}\n")
+            file.appendText("${n},${buildMazeTime.inWholeMilliseconds},${ArrayBackedPathfinder.pathLength},${bfsPathfinderTime.inWholeMilliseconds},${arrayBackedPathfinderTime.inWholeMilliseconds},${mapBackedPathfinderTime.inWholeMilliseconds}\n")
 
         }
 

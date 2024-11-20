@@ -14,10 +14,10 @@ import kotlin.math.abs
 
 object ArrayBackedPathfinder {
     var gVals = TileNavigatedArray<Int>(World.sizeX, World.sizeY, false)
+    var pathLength = 0
     //work along the path, marking tiles with VISITED along the way
     //if marking with visited is too expensive, just make the path and finalize it
     fun generatePath(start: Tile, end: Tile) {
-
         if(!start.isInBounds() || !end.isInBounds()) {
             throw IndexOutOfBoundsException("Cannot generate a path to or from an out of bounds tile")
         }
@@ -26,6 +26,8 @@ object ArrayBackedPathfinder {
             println("Ouroboros detected")
             return
         }
+        
+        pathLength = 0
         gVals = TileNavigatedArray<Int>(World.sizeX, World.sizeY, false)
         val frontier = TileHeap(end, this::fValue)
 
@@ -74,6 +76,7 @@ object ArrayBackedPathfinder {
                 }
             }
             current = lowestCost
+            pathLength++
         }
         World.update(start, start.getProperties() + Directions.INPATH)
     }
