@@ -9,6 +9,7 @@ import kotlin.time.measureTime
 class HierarchicalPathfinding {
     /*
         Next steps:
+            Measure maze complexity by number of steps in path
             Dump results as CSV
             Dump ANSI text to file for processing into image
             Add command line options to run particular pathfinders, render particular pathfinder's markings
