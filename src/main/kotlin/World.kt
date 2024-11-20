@@ -20,7 +20,7 @@ import technology.zim.data.TileNavigatedArray
 @Suppress("unused")
 object World {
     //Default size should be 10
-    val tiles = TileNavigatedArray<TileProperties>()
+    var tiles = TileNavigatedArray<TileProperties>()
     var sizeX = 10 //Default size
     var sizeY = 10
     const val ANSI_RESET = "\u001B[0m"
@@ -54,6 +54,15 @@ object World {
         sizeX = x
         sizeY = y
         tiles.resize(x, y)
+        tiles.forEachIndexed {
+            i, t ->
+            tiles.set(i, TileProperties(0))
+        }
+    }
+
+    fun clear() {
+        tiles = TileNavigatedArray<TileProperties>()
+        setSize(sizeX, sizeY)
     }
 
     override fun toString(): String {

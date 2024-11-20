@@ -4,6 +4,7 @@ import technology.zim.data.Directions
 import technology.zim.data.Tile
 import technology.zim.data.TileHeap
 import technology.zim.data.TileNavigatedArray
+import kotlin.Int
 import kotlin.math.abs
 
 //A* pathfinder backed by an array to improve efficiency
@@ -12,7 +13,7 @@ import kotlin.math.abs
 //and https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Comparator.html
 
 object ArrayBackedPathfinder {
-    val gVals = TileNavigatedArray<Int>(World.sizeX, World.sizeY, false)
+    var gVals = TileNavigatedArray<Int>(World.sizeX, World.sizeY, false)
     //work along the path, marking tiles with VISITED along the way
     //if marking with visited is too expensive, just make the path and finalize it
     fun generatePath(start: Tile, end: Tile) {
@@ -25,7 +26,7 @@ object ArrayBackedPathfinder {
             println("Ouroboros detected")
             return
         }
-
+        gVals = TileNavigatedArray<Int>(World.sizeX, World.sizeY, false)
         val frontier = TileHeap(end, this::fValue)
 
         //Prime the things
@@ -55,7 +56,7 @@ object ArrayBackedPathfinder {
 
         //At this point, a path is found
         markPath(start, end)
-        println("Path found!")
+        //println("Path found!")
     }
 
     fun markPath(start: Tile, end:Tile) {

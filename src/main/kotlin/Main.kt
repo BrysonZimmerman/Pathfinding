@@ -1,6 +1,7 @@
 package technology.zim
 
 import technology.zim.data.Tile
+import java.io.File
 import java.text.NumberFormat
 import java.util.Locale
 import kotlin.time.measureTime
@@ -20,27 +21,22 @@ class HierarchicalPathfinding {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val n = 1000
-            println("Building maze")
-            val buildMazeTime = measureTime {
-                buildMaze(n)
+            val benchmarking = false
+            val ns = arrayListOf(50, 100, 250, 500, 750, 1000)
+            val iterations = 10
+            val file = File("performance.csv")
+            file.writeText("n, build, bfs, astar-array, astar-hashmap\n")
+
+            if(benchmarking) {
+                for (n in ns) {
+                    for (i in 0 until iterations) {
+                        doTheThing(n, file)
+                    }
+                }
             }
-
-            println("Pathfinding")
-
-            val bfsPathfinderTime = measureTime {
-                BFSPathfinder.generatePath(Tile(0, 0), Tile(n-1, n-1))
-            }
-
-
-            val arrayBackedPathfinderTime = measureTime {
-                ArrayBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, (n - 1)))
-            }
-
-            val mapBackedPathfinderTime = measureTime {
-                MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, (n - 1)))
-            }
-
+            else
+                doTheThing(500, file)
+            /*
             val numberFormat = NumberFormat.getInstance(Locale.US)
             println(World.toString())
             println(numberFormat.format(n*n))
@@ -48,13 +44,37 @@ class HierarchicalPathfinding {
             println("BFS Pathfinder time: ${numberFormat.format(bfsPathfinderTime.inWholeMilliseconds)}ms")
             println("Array-Backed Pathfinder time: ${numberFormat.format(arrayBackedPathfinderTime.inWholeMilliseconds)}ms")
             println("HashMap-Backed Pathfinder time: ${numberFormat.format(mapBackedPathfinderTime.inWholeMilliseconds)}ms")
+            */
+        }
+
+        fun doTheThing(n:Int, file:File) {
+            World.clear()
+
+            var buildMazeTime = measureTime {
+                buildMaze(n)
+            }
+
+            var bfsPathfinderTime = measureTime {
+                BFSPathfinder.generatePath(Tile(0, 0), Tile(n - 1, n - 1))
+            }
+
+
+            var arrayBackedPathfinderTime = measureTime {
+                ArrayBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, n - 1))
+            }
+
+            var mapBackedPathfinderTime = measureTime {
+                MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, n - 1))
+            }
+            file.appendText("${n},${buildMazeTime.inWholeMilliseconds},${bfsPathfinderTime.inWholeMilliseconds},${arrayBackedPathfinderTime.inWholeMilliseconds},${mapBackedPathfinderTime.inWholeMilliseconds}\n")
+
         }
 
         fun buildMaze(n: Int) {
 
-            println("Building world")
+            //println("Building world")
             World.setSize(n, n)
-            println("Start")
+            //println("Start")
 
             try {
                 MazeFinder.primsAlgorithm()

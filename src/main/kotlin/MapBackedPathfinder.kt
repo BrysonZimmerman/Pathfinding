@@ -23,7 +23,7 @@ object MapBackedPathfinder {
             println("Ouroboros detected")
             return
         }
-
+        gVals.clear()
         val frontier = TileHeap(end, this::fValue)
 
         //Prime the things
@@ -52,7 +52,7 @@ object MapBackedPathfinder {
         } while( current != end)
 
         //At this point, a path is found
-        println("Path found!")
+        //println("Path found!")
         markPath(start, end)
     }
 

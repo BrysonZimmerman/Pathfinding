@@ -26,6 +26,7 @@ object MazeFinder {
     }
 
     fun primsAlgorithm() {
+        frontier.clear()
         //Prime the graph with the first connection, which marks the first visited Tiles
         val startingTile = World.getRandomLocation()
         val connectorTile = startingTile.getAdjacentTiles(false).random()
@@ -62,7 +63,7 @@ object MazeFinder {
             //println("--------------------------------------------")
 
         }
-        println("prim")
+        //println("prim")
     }
 
     private fun addToManifest(current: Tile) {
