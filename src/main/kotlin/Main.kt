@@ -36,7 +36,10 @@ class HierarchicalPathfinding {
                 }
             }
             else
-                doTheThing(500, file)
+                doTheThing(25, file)
+
+            //Write maze to file
+            //File("maze.txt").writeText(World.toString())
             /*
             val numberFormat = NumberFormat.getInstance(Locale.US)
             println(World.toString())
