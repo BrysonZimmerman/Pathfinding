@@ -15,12 +15,15 @@ class HierarchicalPathfinding {
             Use R to render syntax highlights https://github.com/KDE/syntax-highlighting/blob/master/data/syntax/kotlin.xml
                 https://pandoc.org/MANUAL.html#syntax-highlighting
                 https://hamel.dev/notes/quarto/highlighting.html
+
+            Measure primmaze2.exe during benchmarks by running from MazeFinder
+                https://stackoverflow.com/questions/35421699/how-to-invoke-external-command-from-within-kotlin-code
      */
 
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val benchmarking = false
+            val benchmarking = true
             val ns = arrayListOf(50, 100, 250, 500, 750, 1000)
             val iterations = 10
             val file = File("performance.csv")
@@ -37,7 +40,7 @@ class HierarchicalPathfinding {
                 doTheThing(25, file)
 
             //Write maze to file
-            //File("maze.txt").writeText(World.toString())
+            File("maze.txt").writeText(World.toString())
             /*
             val numberFormat = NumberFormat.getInstance(Locale.US)
             println(World.toString())
