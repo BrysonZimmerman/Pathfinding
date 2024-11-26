@@ -24,7 +24,7 @@ class HierarchicalPathfinding {
         @JvmStatic
         fun main(args: Array<String>) {
             val benchmarking = true
-            val ns = arrayListOf(50, 100, 250, 500, 750, 1000)
+            val ns = arrayListOf(50, 100, 250, 500, 750, 1000).reversed()
             val iterations = 10
             val file = File("performance.csv")
             file.writeText("n,path-length,build,bfs,astar-array,astar-hashmap\n")
