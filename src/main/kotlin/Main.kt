@@ -21,17 +21,21 @@ class HierarchicalPathfinding {
             val ns = arrayListOf(50, 100, 250, 500, 750, 1000).reversed()
             val iterations = 10
             val file = File("performance.csv")
-            file.writeText("n,path-length,build,bfs,astar-array,astar-hashmap\n")
-
+            file.writeText("n,path-length,prims,bfs,astar-array,astar-hashmap\n")
+            var rossFile = File("performance-ross.csv")
             if(benchmarking) {
                 for (n in ns) {
                     for (i in 0 until iterations) {
                         doTheThing(n, file)
+                        val handle = Runtime.getRuntime().exec("primmaze2.exe ${n}")
+                        handle.waitFor()
+                        val output = handle.inputStream.bufferedReader().readText()
+                        rossFile.appendText(output)
                     }
                 }
             }
             else
-                doTheThing(25, file)
+                doTheThing(1000, File("performance-single.txt"))
 
             //Write maze to file
             File("maze.txt").writeText(World.toString())
@@ -65,7 +69,7 @@ class HierarchicalPathfinding {
             var mapBackedPathfinderTime = measureTime {
                 MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, n - 1))
             }
-            file.appendText("${n},${buildMazeTime.inWholeMilliseconds},${ArrayBackedPathfinder.pathLength},${bfsPathfinderTime.inWholeMilliseconds},${arrayBackedPathfinderTime.inWholeMilliseconds},${mapBackedPathfinderTime.inWholeMilliseconds}\n")
+            file.appendText("${n},${ArrayBackedPathfinder.pathLength},${buildMazeTime.inWholeMilliseconds},${bfsPathfinderTime.inWholeMilliseconds},${arrayBackedPathfinderTime.inWholeMilliseconds},${mapBackedPathfinderTime.inWholeMilliseconds}\n")
 
         }
 
