@@ -7,17 +7,11 @@ import kotlin.time.measureTime
 class HierarchicalPathfinding {
     /*
         Next steps:
-            Measure maze complexity by number of steps in path
-            Dump results as CSV
-            Dump ANSI text to file for processing into image
             Add command line options to run particular pathfinders, render particular pathfinder's markings
             Add HPA*, should be a bit easier with existing abstractions. Hard part will be the path calculations
             Use R to render syntax highlights https://github.com/KDE/syntax-highlighting/blob/master/data/syntax/kotlin.xml
                 https://pandoc.org/MANUAL.html#syntax-highlighting
                 https://hamel.dev/notes/quarto/highlighting.html
-
-            Measure primmaze2.exe during benchmarks by running from MazeFinder
-                https://stackoverflow.com/questions/35421699/how-to-invoke-external-command-from-within-kotlin-code
      */
 
     companion object {
