@@ -23,6 +23,7 @@ class HierarchicalPathfinding {
             val file = File("performance.csv")
             file.writeText("n,path-length,prims,bfs,astar-array,astar-hashmap\n")
             var rossFile = File("performance-ross.csv")
+            rossFile.writeText("n,path-length,prims,bfs,astar-array,astar-hashmap\n")
             if(benchmarking) {
                 for (n in ns) {
                     for (i in 0 until iterations) {
