@@ -18,8 +18,8 @@ class HierarchicalPathfinding {
         @JvmStatic
         fun main(args: Array<String>) {
             val benchmarking = true
-            val ns = arrayListOf(50, 100, 250, 500, 750, 1000).reversed()
-            val iterations = 10
+            val ns = arrayListOf(10, 25, 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100).reversed()
+            val iterations = 25
             val file = File("performance.csv")
             file.writeText("n,path-length,prims,bfs,astar-array,astar-hashmap\n")
             var rossFile = File("performance-ross.csv")
@@ -44,10 +44,10 @@ class HierarchicalPathfinding {
             val numberFormat = NumberFormat.getInstance(Locale.US)
             println(World.toString())
             println(numberFormat.format(n*n))
-            println("Maze build time: ${numberFormat.format(buildMazeTime.inWholeMilliseconds)} ms")
-            println("BFS Pathfinder time: ${numberFormat.format(bfsPathfinderTime.inWholeMilliseconds)}ms")
-            println("Array-Backed Pathfinder time: ${numberFormat.format(arrayBackedPathfinderTime.inWholeMilliseconds)}ms")
-            println("HashMap-Backed Pathfinder time: ${numberFormat.format(mapBackedPathfinderTime.inWholeMilliseconds)}ms")
+            println("Maze build time: ${numberFormat.format(buildMazeTime.inWholeMicroseconds)} ms")
+            println("BFS Pathfinder time: ${numberFormat.format(bfsPathfinderTime.inWholeMicroseconds)}ms")
+            println("Array-Backed Pathfinder time: ${numberFormat.format(arrayBackedPathfinderTime.inWholeMicroseconds)}ms")
+            println("HashMap-Backed Pathfinder time: ${numberFormat.format(mapBackedPathfinderTime.inWholeMicroseconds)}ms")
             */
         }
 
@@ -70,7 +70,7 @@ class HierarchicalPathfinding {
             var mapBackedPathfinderTime = measureTime {
                 MapBackedPathfinder.generatePath(Tile(0, 0), Tile(n - 1, n - 1))
             }
-            file.appendText("${n},${ArrayBackedPathfinder.pathLength},${buildMazeTime.inWholeMilliseconds},${bfsPathfinderTime.inWholeMilliseconds},${arrayBackedPathfinderTime.inWholeMilliseconds},${mapBackedPathfinderTime.inWholeMilliseconds}\n")
+            file.appendText("${n},${ArrayBackedPathfinder.pathLength},${buildMazeTime.inWholeMicroseconds},${bfsPathfinderTime.inWholeMicroseconds},${arrayBackedPathfinderTime.inWholeMicroseconds},${mapBackedPathfinderTime.inWholeMicroseconds}\n")
 
         }
 
