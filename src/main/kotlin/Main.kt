@@ -9,9 +9,6 @@ class HierarchicalPathfinding {
         Next steps:
             Add command line options to run particular pathfinders, render particular pathfinder's markings
             Add HPA*, should be a bit easier with existing abstractions. Hard part will be the path calculations
-            Use R to render syntax highlights https://github.com/KDE/syntax-highlighting/blob/master/data/syntax/kotlin.xml
-                https://pandoc.org/MANUAL.html#syntax-highlighting
-                https://hamel.dev/notes/quarto/highlighting.html
      */
 
     companion object {
