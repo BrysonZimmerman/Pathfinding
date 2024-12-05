@@ -136,10 +136,4 @@ object World {
             else -> '•'
         }
     }
-
-    //Reads array left to right, top to bottom
-    //Only looks at SOUTH and EAST connections
-    //Either connection exists or it does not, whitespace character for exists, some block-appearing char for not
-    //Needs one monowidth char space between each column of array
-    //Needs one line between each row, line containing vertical connections
 }

@@ -18,7 +18,7 @@ enum class Directions(val dir: Int) {
 
     companion object {
 
-        //Todo: This breaks the connect() function when used
+        //Todo: This breaks the connect() function when used. Fixing it would be nice, but is unnecessary.
         fun opposite(dir: Directions): Directions {
             return when(dir) {
                 UP -> DOWN

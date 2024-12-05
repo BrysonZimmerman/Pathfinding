@@ -9,14 +9,10 @@ import kotlin.math.abs
 
 //A* pathfinder backed by an array to improve efficiency
 
-//Needs https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/PriorityQueue.html
-//and https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Comparator.html
-
 object ArrayBackedPathfinder {
     var gVals = TileNavigatedArray<Int>(World.sizeX, World.sizeY, false)
     var pathLength = 0
-    //work along the path, marking tiles with VISITED along the way
-    //if marking with visited is too expensive, just make the path and finalize it
+
     fun generatePath(start: Tile, end: Tile) {
         if(!start.isInBounds() || !end.isInBounds()) {
             throw IndexOutOfBoundsException("Cannot generate a path to or from an out of bounds tile")
@@ -31,7 +27,7 @@ object ArrayBackedPathfinder {
         gVals = TileNavigatedArray<Int>(World.sizeX, World.sizeY, false)
         val frontier = TileHeap(end, this::fValue)
 
-        //Prime the things
+        //Prime the frontier
         gVals.set(start, 0)
         frontier.insert(start)
 
@@ -41,7 +37,6 @@ object ArrayBackedPathfinder {
         do {
             current = frontier.popMin()
             currentG = gVals.get(current) ?: 0.also { println("Failed to get gVal that must exist") }
-
 
             current.getConnections().forEach { candidateTile ->
                 val candidateG = gVals.get(candidateTile)?:-1
@@ -58,7 +53,6 @@ object ArrayBackedPathfinder {
 
         //At this point, a path is found
         markPath(start, end)
-        //println("Path found!")
     }
 
     fun markPath(start: Tile, end:Tile) {

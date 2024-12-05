@@ -23,7 +23,11 @@ object BFSPathfinder {
         //Queue for tiles to be checked
         val frontier = ArrayDeque<Tile>()
         frontier.addLast(start)
+
+        //Set the starting Tile's gValue to 0 because it is 0 steps away from itself
         gVals.set(start, 0)
+
+        //Add the starting tile to the frontier to kick off the process
         World.update(start, Directions.BFSFRONTIER)
 
         var current:Tile
