@@ -1,7 +1,8 @@
 # HierarchicalPathfinding
-Find my code inside ./src/
+A senior project turned ongoing experiment. Builds a grid maze then pathfinds using A* and the Manhattan heuristic. Also demonstrates points where following runtime theory causes significant issues.
 
-Open project using IntelliJ IDEA for compilation, build with Gradle
+Possible future improvements include hierarchical A*, optional diagonal movement, conditional teleports, and moving teleport locations.
+
 
 primmaze2.exe was developed by a friend and included here for benchmarking comparison purposes
 
